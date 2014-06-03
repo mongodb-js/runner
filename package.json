@@ -1,0 +1,29 @@
+{
+  "name": "mongodb-runner",
+  "version": "0.0.1",
+  "author": "Lucas Hrabovsky <hrabovsky.lucas@gmail.com> (http://imlucas.com)",
+  "description": "Starts all of the deployment types for testing",
+  "scripts": {
+    "test": "mocha"
+  },
+  "homepage": "http://github.com/imlucas/mongodb-runner",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/imlucas/mongodb-runner.git"
+  },
+  "keywords": [
+    "mongodb",
+    "mongodb.js"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "debug": "^0.8.1",
+    "which": "^1.0.5",
+    "keepup": "^0.0.4",
+    "mongodb-bridge": "^0.0.5",
+    "mongodb-log": "^0.1.0"
+  },
+  "devDependencies": {
+    "mocha": "^1.17.1"
+  }
+}
