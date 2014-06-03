@@ -6,6 +6,8 @@ var keepup = require('keepup'),
   mkdirp = require('mkdirp'),
   debug = require('debug')('mongodb-runner'),
   which = require('which'),
+
+  // @todo: support multi version selection.  see mongo/buildscripts/setup_multiversion_mongodb.py.
   bin = {
     mongo: which.sync('mongo'),
     mongod: which.sync('mongod'),
