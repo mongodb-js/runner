@@ -6,6 +6,9 @@
   "scripts": {
     "test": "mocha"
   },
+  "bin": {
+    "mongodb-runner": "./bin/mongodb-runner.js"
+  },
   "homepage": "http://github.com/imlucas/mongodb-runner",
   "repository": {
     "type": "git",
