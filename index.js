@@ -3,6 +3,7 @@ var keepup = require('keepup'),
   bridge = require('mongodb-bridge'),
   log = require('mongodb-log'),
   os = require('os'),
+  mkdirp = require('mkdirp'),
   debug = require('debug')('mongodb-runner'),
   which = require('which'),
   bin = {
@@ -66,7 +67,8 @@ module.exports = function(opts, fn){
   opts = opts || {};
   opts.port = parseInt((opts.port || 27017), 10);
   opts.dbpath = path.resolve((opts.dbpath || '/data/db/standalone'));
-  // @todo: mkdirp for opts.dbpath
+
+  mkdirp.sync(opts.dbpath);
 
   // bridge({to: 'localhost:' + opts.port});
 
