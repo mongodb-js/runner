@@ -2,8 +2,7 @@
 
 [![build status](https://secure.travis-ci.org/imlucas/mongodb-runner.png)](http://travis-ci.org/imlucas/mongodb-runner)
 
-Starts all of the deployment types for testing by piping to `mongo` shell. 
-
+Starts all of the deployment types for testing by piping to `mongo` shell.
 
 ## Example
 
@@ -66,6 +65,15 @@ shell('var opts = {name: \''+opts.name+'\', nodes: '+opts.instances+', useHostNa
 - [ ] Integrate @imlucas/mongodb-bridge fully as a option `bridge: true`
 - [ ] Use lone to prebake binaries and upload to releases
 - [ ] Make mongodb-bridge capable of reconfiguring oplog.rs automatically [per kristina's example](http://www.kchodorow.com/blog/2011/04/20/simulating-network-paritions-with-mongobridge/)
+- [ ] `mongodb-runner killall` for cross platform kill mongod|mongos
+- [ ] `mongodb-runner startall` should fork when everything started
+- [ ] mongodb-runner keeps pid files in `{cwd}/.mongodb/pids` for safe
+      startall and killall
+- [ ] ALL ci tasks can then just be:
+    ```
+    mongodb-runner startall && mongorella test && mongodb-runner killall
+    ```
+- [ ] Option for version, integrated with @imlucas/mongodb-version-manager
 
 ## License
 
