@@ -21,7 +21,7 @@
   "license": "MIT",
   "dependencies": {
     "debug": "^1.0.2",
-    "keepup": "0.0.4",
+    "keepup": "^0.0.7",
     "mkdirp": "^0.5.0",
     "mongodb-bridge": "^0.0.5",
     "mongodb-log": "^0.1.0",
