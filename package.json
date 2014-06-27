@@ -1,6 +1,6 @@
 {
   "name": "mongodb-runner",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "author": "Lucas Hrabovsky <hrabovsky.lucas@gmail.com> (http://imlucas.com)",
   "description": "Starts all of the deployment types for testing",
   "scripts": {
