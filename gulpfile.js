@@ -2,6 +2,19 @@ var gulp = require('gulp'),
   path = require('path'),
   exec = require('child_process').exec;
 
+gulp.task('keyfile', function(done){
+  var key = path.resolve('./keys/mongodb-keyfile');
+  exec('openssl rand -base64 741 > ' + key, function(err){
+    if(err) return done(err);
+    exec('chmod 600 ' + key, function(err){
+      if(err) return done(err);
+
+      console.log('- ' + key);
+      done();
+    });
+  });
+});
+
 gulp.task('pem', function(done){
   var out = path.resolve('./keys/mongodb-cert.crt'),
     keyout = path.resolve('./keys/mongodb-cert.key'),
