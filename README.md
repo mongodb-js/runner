@@ -74,6 +74,29 @@ shell('var opts = {name: \''+opts.name+'\', nodes: '+opts.instances+', useHostNa
     mongodb-runner startall && mongorella test && mongodb-runner killall
     ```
 - [ ] Option for version, integrated with @imlucas/mongodb-version-manager
+- [ ] Support auth
+
+## Auth
+
+
+```
+# Start mongod
+
+mongod --keyFile keyFile/1 --setParameter "enableLocalhostAuthBypass=1"
+
+# Create a root user
+db.getMongo().getDB('admin').createUser({user: 'root', pwd: 'password', roles: ['root']});
+
+
+var opts = {
+  dbpath: '~/.mongodb/data/auth-basic',
+  port: 27001,
+  host: 'localhost',
+  keyFile: __dirname + '/keyFile/1'
+};
+```
+
+mongo localhost:27001 -u root -p password --authenticationDatabase admin
 
 ## License
 

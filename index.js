@@ -2,6 +2,7 @@ var keepup = require('keepup'),
   path = require('path'),
   bridge = require('mongodb-bridge'),
   log = require('mongodb-log'),
+  untildify = require('untildify'),
   os = require('os'),
   mkdirp = require('mkdirp'),
   debug = require('debug')('mongodb-runner'),
@@ -23,7 +24,22 @@ function shell(){
     id = Math.random(),
     done = args.pop(),
     script,
-    cmd = bin.mongo + ' localhost:27017 --eval "print(\'turtlepower.\')" --shell';
+    cmd,
+    opts;
+  if(Object.prototype.toString.call(args[0]) === '[object Object]'){
+    opts = args.shift();
+  }
+
+  opts = opts || {};
+  opts.port = opts.port || 27017;
+
+  cmd = bin.mongo + ' localhost:' + opts.port;
+
+  if(opts.username){
+    cmd += ' -u ' + opts.username + ' -p ' + opts.password + ' --authenticationDatabase admin';
+  }
+  cmd += ' --eval "print(\'turtlepower.\')" --shell';
+
   args.push('print(\'complete:' + id + '\')');
   args.push('');
   script = args.join(os.EOL);
@@ -71,16 +87,28 @@ module.exports = function(opts, fn){
 
   opts = opts || {};
   opts.port = parseInt((opts.port || 27017), 10);
-  opts.dbpath = path.resolve((opts.dbpath || '/data/db/standalone'));
+  opts.dbpath = (opts.dbpath || '/data/db/standalone');
+  opts.dbpath = path.resolve(untildify(opts.dbpath));
+
+  opts.params = opts.params || {};
 
   mkdirp.sync(opts.dbpath);
 
   // bridge({to: 'localhost:' + opts.port});
 
-  var cmd = bin.mongod + ' --port ' + opts.port + ' --dbpath ' + opts.dbpath;
+  var cmd = [bin.mongod, '--port', opts.port, '--dbpath', opts.dbpath];
 
+  if(opts.keyFile){
+    cmd.push.apply(cmd, ['--keyFile', opts.keyFile]);
+  }
+  Object.keys(opts.params).map(function(k){
+    cmd.push.apply(cmd, ['--setParameter', k + '=' + opts.params[k]]);
+  });
+
+  cmd = cmd.join(' ');
   debug('starting standalone', cmd);
 
+  var _d = require('debug')('mongod:' + opts.port);
   var prog = keepup(cmd).on('ready', function(){
       fn(null, prog);
     })
@@ -90,18 +118,21 @@ module.exports = function(opts, fn){
     .on('data', function(buf){
       var messages = log.parse(buf.toString().split('\n'));
       messages.filter(function(msg){
+        _d(msg.message);
         return msg.event !== null;
       }).map(function(msg){
         return msg.event;
       }).forEach(function(evt){
         if(evt.name === 'ready'){
-          debug('emitting', evt.name);
           prog.emit(evt.name, evt.data);
         }
       });
     });
   allPrograms.push(prog);
+  return prog;
 };
+
+module.exports.shell = shell;
 
 module.exports.bridge = function(opts){
   debug('starting bridge', opts);
@@ -179,3 +210,5 @@ module.exports.close = function(){
     prog.stop();
   });
 };
+
+module.exports.recipes = require('./recipes');
