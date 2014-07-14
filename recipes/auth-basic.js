@@ -21,7 +21,7 @@ module.exports = function(opts, done){
       // Kill it and restart with auth enabled
       mongod.stop();
       mongod = runner(opts, function(err){
-        done(err);
+        done(err, mongod);
       });
     });
   });
