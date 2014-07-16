@@ -16,10 +16,24 @@ function all(opts, fn){
     opts = {};
   }
 
-  var tasks = [];
-  Object.keys(module.exports).map(function(name){
+  var tasks = [],
+    names = Object.keys(module.exports);
+
+  names.map(function(name){
     tasks.push(function(cb){
-      module.exports[name](opts, cb);
+      console.log(JSON.stringify({
+        name: 'start',
+        recipe: name
+      }));
+      module.exports[name](opts, function(err, res){
+        if(err) return cb(err);
+          console.log(JSON.stringify({
+            name: 'ready',
+            uri: res.uri,
+            recipe: name
+          }));
+        cb();
+      });
     });
   });
 
