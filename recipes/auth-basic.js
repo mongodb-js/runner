@@ -1,5 +1,5 @@
 var path = require('path'),
-  shell = require('../').shell,
+  shell = require('../lib/').shell,
   standalone = require('./standalone'),
   debug = require('debug')('mongodb-runner:recipe:auth-basic');
 

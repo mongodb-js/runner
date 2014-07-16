@@ -1,11 +1,16 @@
 #!/usr/bin/env node
 var runner = require('../'),
-  yargs = require('yargs'),
-  name = yargs.argv._[0] || process.env.RUNNER_RECIPE || 'all',
-  recipe = runner.recipes[name];
+  yargs = require('yargs');
 
-recipe(yargs.argv, function(err){
+runner(yargs.argv._[0], function(err, res){
   if(err) return console.error(err);
+  if(res && res.uri){
+    console.log(JSON.stringify({
+      name: 'ready',
+      uri: res.uri,
+      recipe: res.recipe
+    }));
+  }
 });
 
 // @todo: This should just start an http ctl server like mongodb-bridge

@@ -1,7 +1,18 @@
-var bridge = require('mongodb-bridge');
+var bridge = require('mongodb-bridge'),
+  recipes = require('./recipes'),
+  manager = require('./lib').manager;
 
-module.exports = require('./lib');
-module.exports.recipes = require('./recipes');
+module.exports = function(name, fn){
+  name = name || process.env.RUNNER_RECIPE || 'all';
+  if(!recipes[name]){
+    return fn(new Error('Unknown recipe `'+name+'`'));
+  }
+  recipes[name]({}, function(err, res){
+    if(err) return fn(err);
+    res.recipe = name;
+    fn(null, res);
+  });
+};
 
 module.exports.bridge = function(opts){
   debug('starting bridge', opts);
