@@ -8,7 +8,7 @@ module.exports = function(opts, fn){
   }
 
   opts = opts || {};
-  opts.name = opts.name || 'replicom';
+  opts.rs = opts.rs || 'replicom';
   opts.instances = parseInt((opts.instances || 3), 10);
   opts.startPort = parseInt((opts.startPort || 6000), 10);
 
@@ -20,14 +20,14 @@ module.exports = function(opts, fn){
 
   debug('starting replicaset', opts);
 
-  shell('var opts = {name: \''+opts.name+'\', nodes: '+opts.instances+', useHostName: false, startPort: '+opts.startPort+'};',
+  shell('var opts = {name: \''+opts.rs+'\', nodes: '+opts.instances+', useHostName: false, startPort: '+opts.startPort+'};',
     'var rs = new ReplSetTest(opts);',
     'rs.startSet();', 'rs.initiate();',
     function(err){
       if(err) return fn(err);
 
       fn(null, {
-        uri: 'mongodb://'+hosts.join(',')+'?replicaSet=' + opts.name
+        uri: 'mongodb://'+hosts.join(',')+'?replicaSet=' + opts.rs
       });
     });
 };
