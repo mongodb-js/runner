@@ -1,13 +1,11 @@
 var debug = require('debug')('mongodb-runner:cluster'),
-  shell = require('../').shell;
+  shell = require('../lib/shell');
 
 module.exports = function(opts, fn){
   if(typeof opts === 'function'){
     fn = opts;
     opts = {};
   }
-
-  if(!fn) fn = function(){};
 
   opts = opts || {};
   opts.db = opts.db || 'clusterco';
@@ -21,5 +19,11 @@ module.exports = function(opts, fn){
     'var st = new ShardingTest(opts);',
     'st.s.getDB(\''+opts.db+'\').adminCommand({enableSharding: \''+opts.db+'\'});',
     'st.s.getDB(\''+opts.db+'\').adminCommand({shardCollection: \''+opts.ns+'\', key: {_id: 1 }});',
-  fn);
+  function(err){
+    if(err) return fn(err);
+
+    opts.uri = 'mongodb://localhost:30999';
+
+    fn(null, opts);
+  });
 };

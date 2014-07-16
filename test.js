@@ -1,16 +1,20 @@
 var assert = require('assert'),
-  runner = require('./');
+  run = require('./');
 
 describe('runner', function(){
   it('should start a standalone', function(done){
-    runner(done);
+    run('standalone', done);
+  });
+
+  it('should start a standalone with auth', function(done){
+    run('auth-basic', done);
   });
 
   it('should start a replica set', function(done){
-    runner.replicaset(done);
+    run('replicaset', done);
   });
 
   it('should start a cluster', function(done){
-    runner.cluster(done);
+    run('cluster', done);
   });
 });

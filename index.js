@@ -9,6 +9,8 @@ module.exports = function(name, fn){
   }
   recipes[name]({}, function(err, res){
     if(err) return fn(err);
+
+    res = res || {};
     res.recipe = name;
     fn(null, res);
   });
