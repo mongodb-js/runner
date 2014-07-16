@@ -6,7 +6,6 @@ var runner = require('../'),
 
 recipe(yargs.argv, function(err){
   if(err) return console.error(err);
-  console.log(name + ' ready');
 });
 
 // @todo: This should just start an http ctl server like mongodb-bridge

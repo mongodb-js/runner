@@ -1,8 +1,7 @@
 var bridge = require('mongodb-bridge');
 
-module.exports.bin = require('./lib/bin');
-module.exports.shell = require('./lib/shell');
-module.exports.manager = require('./lib/manager');
+module.exports = require('./lib');
+module.exports.recipes = require('./recipes');
 
 module.exports.bridge = function(opts){
   debug('starting bridge', opts);
@@ -16,5 +15,3 @@ module.exports.close = function(){
     });
   });
 };
-
-module.exports.recipes = require('./recipes');

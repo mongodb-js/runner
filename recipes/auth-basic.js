@@ -1,25 +1,31 @@
 var path = require('path'),
   shell = require('../').shell,
-  standalone = require('./standalone');
+  standalone = require('./standalone'),
+  debug = require('debug')('mongodb-runner:recipe:auth-basic');
 
 module.exports = function(opts, done){
   opts = {
+    name: 'auth-basic:27001',
     dbpath: '~/.mongodb/data/auth-basic',
     port: 27001,
     keyFile: path.resolve(__dirname + '/../keys/mongodb-keyfile')
   };
 
-  // Start it up first
-  // @todo rm -rf opts.dbpath
-  var mongod = standalone({dbpath: opts.dbpath, port: opts.port}, function(err){
+  debug('start one time to clear old data');
+  var mongod = standalone({
+      name: 'setup|' + opts.name,
+      clear: true,
+      dbpath: opts.dbpath,
+      port: opts.port
+    }, function(err){
     if(err) return done(err);
 
-    // Create the initial user
+    debug('create the initial root user');
     shell({port: opts.port}, "db.getMongo().getDB('admin').createUser(" +
       "{user: 'root', pwd: 'password', roles: ['root']});", function(err){
       if(err) return done(err);
 
-      // Kill it and restart with auth enabled
+      debug('restarting to enable auth');
       mongod.stop();
       mongod = standalone(opts, function(err){
         done(err, mongod);
