@@ -7,11 +7,11 @@ Starts all of the deployment types for testing by piping to `mongo` shell.
 ## Example
 
 ```javascript
-var runner = require('mongodb-runner');
+var mongodb = require('mongodb-runner');
 
-// Start a standalone, replica set, and cluster
+// Start a standalone, standalone with auth, replica set, and cluster
 // process.env.DEBUG = 'mongodb*'; // uncomment me to get stdout from shell commands
-runner.listen(function(err){
+mongodb(function(err){
   if(err) return console.error('Uhoh...', err);
   console.log('MongoDB deployments for testing ready!');
   // do tests and stuff
@@ -19,25 +19,25 @@ runner.listen(function(err){
 });
 
 // start just a standalone
-runner({port: 27018, dbpath: '/ebs/data/'+process.env.JOB_ID+'_standalone'}, function(err){
+mongodb({port: 27018, dbpath: '/ebs/data/'+process.env.JOB_ID+'_standalone'}, function(err){
   if(err) return console.error('Uhoh...', err);
   console.log('Standalone ready on localhost:27018!');
 });
 
 // just a replicaset
-runner.replicaset({name: 'replicom', instances: 3, startPort: 6000}, function(err){
+mongodb('replicaset', {name: 'replicom', instances: 3, startPort: 6000}, function(err, res){
   if(err) return console.error('Uhoh...', err);
-  console.log('replicaset ready!');
-  console.log('primary: localhost:6000');
-  console.log('secondaries: localhost:6001, localhost:6002');
-});
-
-// just a cluster
-runner.replicaset({db: 'clusterco', collection: 'users', shards: 2}, function(err){
-  if(err) return console.error('Uhoh...', err);
-  console.log('clusterco ready to be tested!');
+  console.log('replicaset ready!', res.uri);
 });
 ```
+
+### Shell
+
+```
+npm install -g mongodb-runner
+DEBUG=* mongodb-runner
+```
+
 
 ## Under the hood
 
@@ -62,41 +62,13 @@ shell('var opts = {name: \''+opts.name+'\', nodes: '+opts.instances+', useHostNa
 
 ## Todo
 
-- [ ] Integrate @imlucas/mongodb-bridge fully as a option `bridge: true`
-- [ ] Use lone to prebake binaries and upload to releases
-- [ ] Make mongodb-bridge capable of reconfiguring oplog.rs automatically [per kristina's example](http://www.kchodorow.com/blog/2011/04/20/simulating-network-paritions-with-mongobridge/)
-- [ ] `mongodb-runner killall` for cross platform kill mongod|mongos
-- [ ] `mongodb-runner startall` should fork when everything started
-- [ ] mongodb-runner keeps pid files in `{cwd}/.mongodb/pids` for safe
-      startall and killall
-- [ ] ALL ci tasks can then just be:
-    ```
-    mongodb-runner startall && mongorella test && mongodb-runner killall
-    ```
-- [ ] Option for version, integrated with @imlucas/mongodb-version-manager
-- [ ] Support auth
-
-## Auth
-
-
-```
-# Start mongod
-
-mongod --keyFile keyFile/1 --setParameter "enableLocalhostAuthBypass=1"
-
-# Create a root user
-db.getMongo().getDB('admin').createUser({user: 'root', pwd: 'password', roles: ['root']});
-
-
-var opts = {
-  dbpath: '~/.mongodb/data/auth-basic',
-  port: 27001,
-  host: 'localhost',
-  keyFile: __dirname + '/keyFile/1'
-};
-```
-
-mongo localhost:27001 -u root -p password --authenticationDatabase admin
+- [x] use lone to prebake binaries and upload to releases
+- [x] support auth
+- [ ] HTTP control like mongodb-bridge
+- [ ] option for version, integrated with @imlucas/mongodb-version-manager
+- [ ] integrate @imlucas/mongodb-bridge fully as a option `bridge: true`.
+    make mongodb-bridge capable of reconfiguring oplog.rs automatically
+    [per kristina's example](http://www.kchodorow.com/blog/2011/04/20/simulating-network-paritions-with-mongobridge/)
 
 ## License
 
