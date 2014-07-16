@@ -12,6 +12,13 @@ module.exports = function(name, fn){
 
     res = res || {};
     res.recipe = name;
+
+    console.log(JSON.stringify({
+      name: 'ready',
+      uri: res.uri,
+      recipe: res.recipe
+    }));
+
     fn(null, res);
   });
 };
