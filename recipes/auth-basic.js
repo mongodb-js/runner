@@ -1,5 +1,6 @@
 var path = require('path'),
-  runner = require('../');
+  shell = require('../').shell,
+  standalone = require('./standalone');
 
 module.exports = function(opts, done){
   opts = {
@@ -10,17 +11,17 @@ module.exports = function(opts, done){
 
   // Start it up first
   // @todo rm -rf opts.dbpath
-  var mongod = runner({dbpath: opts.dbpath, port: opts.port}, function(err){
+  var mongod = standalone({dbpath: opts.dbpath, port: opts.port}, function(err){
     if(err) return done(err);
 
     // Create the initial user
-    runner.shell({port: opts.port}, "db.getMongo().getDB('admin').createUser(" +
+    shell({port: opts.port}, "db.getMongo().getDB('admin').createUser(" +
       "{user: 'root', pwd: 'password', roles: ['root']});", function(err){
       if(err) return done(err);
 
       // Kill it and restart with auth enabled
       mongod.stop();
-      mongod = runner(opts, function(err){
+      mongod = standalone(opts, function(err){
         done(err, mongod);
       });
     });
