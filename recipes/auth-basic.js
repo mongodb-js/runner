@@ -6,7 +6,7 @@ var path = require('path'),
 module.exports = function(opts, done){
   opts = {
     name: 'auth-basic:27001',
-    dbpath: '~/.mongodb/data/auth-basic',
+    dbpath: '/data/db/auth-basic',
     port: 27001,
     keyFile: path.resolve(__dirname + '/../keys/mongodb-keyfile')
   };
