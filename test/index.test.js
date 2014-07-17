@@ -1,5 +1,4 @@
-var assert = require('assert'),
-  run = require('./');
+var run = require('../');
 
 describe('runner', function(){
   it('should start a standalone', function(done){

@@ -17,7 +17,9 @@ function all(opts, fn){
   }
 
   var tasks = [],
-    names = Object.keys(module.exports);
+    names = Object.keys(module.exports).filter(function(n){
+      return n !== 'all';
+    });
 
   names.map(function(name){
     tasks.push(function(cb){
