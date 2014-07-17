@@ -4,7 +4,7 @@
   "author": "Lucas Hrabovsky <hrabovsky.lucas@gmail.com> (http://imlucas.com)",
   "description": "Starts all of the deployment types for testing",
   "scripts": {
-    "test": "mocha -R spec --timeout 60000",
+    "test": "mocha",
     "build": "gulp build",
     "dist": "gulp dist",
     "start": "DEBUG=* ./bin/mongodb-runner.js"

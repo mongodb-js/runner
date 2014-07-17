@@ -1,4 +1,5 @@
-var run = require('../');
+var run = require('../'),
+  assert = require('assert');
 
 describe('runner', function(){
   it('should start a standalone', function(done){
@@ -6,7 +7,12 @@ describe('runner', function(){
   });
 
   it('should start a standalone with auth', function(done){
-    run('auth-basic', done);
+    run('auth-basic', function(err, prog){
+      assert.ifError(err);
+      assert(prog);
+      prog.stop();
+      done();
+    });
   });
 
   it('should start a replica set', function(done){
