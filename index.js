@@ -18,7 +18,6 @@ module.exports = function(name, fn){
 };
 
 module.exports.bridge = function(opts){
-  debug('starting bridge', opts);
   return bridge(opts);
 };
 

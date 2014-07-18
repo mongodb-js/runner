@@ -26,9 +26,10 @@ module.exports = function(opts, done){
       if(err) return done(err);
 
       debug('restarting to enable auth');
-      mongod.stop();
-      mongod = standalone(opts, function(err){
-        done(err, mongod);
+      mongod.stop(function(){
+        mongod = standalone(opts, function(err){
+          done(err, mongod);
+        });
       });
     });
   });
