@@ -1,3 +1,7 @@
 language: node_js
 node_js:
   - "0.10"
+env:
+  - MONGODB_VERSION=2.4.x
+  - MONGODB_VERSION=2.6.x
+  - MONGODB_VERSION=2.7.x
