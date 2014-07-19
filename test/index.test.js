@@ -6,7 +6,7 @@ describe('runner', function(){
     run('standalone', done);
   });
 
-  it('should start a standalone with auth', function(done){
+  it('should start with auth', function(done){
     run('auth-basic', function(err, prog){
       assert.ifError(err);
       assert(prog);

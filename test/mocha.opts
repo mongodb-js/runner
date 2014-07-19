@@ -1,2 +1,2 @@
  -R spec
- --timeout 60000
+ --timeout 120000

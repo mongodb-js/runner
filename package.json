@@ -5,6 +5,7 @@
   "description": "Starts all of the deployment types for testing",
   "scripts": {
     "test": "mocha",
+    "ci": "m kill && m ${MONGODB_VERSION} && mocha",
     "build": "gulp build",
     "dist": "gulp dist",
     "start": "DEBUG=* ./bin/mongodb-runner.js"
@@ -31,6 +32,7 @@
     "mkdirp": "^0.5.0",
     "mongodb-bridge": "^0.0.5",
     "mongodb-log": "^1.2.1",
+    "mongodb-version-manager": "0.0.2",
     "untildify": "^0.1.0",
     "which": "^1.0.5",
     "yargs": "^1.2.6"
