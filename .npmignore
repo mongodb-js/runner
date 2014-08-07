@@ -1,0 +1,5 @@
+.jshintrc
+.travis.yml
+test/
+.lone
+gulpfile.js

@@ -20,6 +20,8 @@ module.exports = function(name, fn){
   });
 };
 
+module.exports.shell = require('./lib').shell;
+
 module.exports.bridge = function(opts){
   return bridge(opts);
 };
