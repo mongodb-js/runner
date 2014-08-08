@@ -2,7 +2,8 @@
 
 [![build status](https://secure.travis-ci.org/imlucas/mongodb-runner.png)](http://travis-ci.org/imlucas/mongodb-runner)
 
-Starts all of the deployment types for testing by piping to `mongo` shell.
+Starts and sets up deployment recipes for testing against by piping to
+`mongo` shell and reusing all of the internal functions.
 
 ## Example
 
