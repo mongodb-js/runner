@@ -7,7 +7,7 @@
     "test": "m kill && m ${MONGODB_VERSION} && mocha",
     "build": "gulp build",
     "dist": "gulp dist",
-    "start": "DEBUG=* ./bin/mongodb-runner.js"
+    "start": "bin/mongodb-runner.js"
   },
   "bin": {
     "mongodb-runner": "./bin/mongodb-runner.js"
@@ -38,7 +38,7 @@
   "devDependencies": {
     "gulp": "^3.8.7",
     "github-release": "^0.1.0",
-    "lone": "^0.3.3",
+    "lone": "^0.3.4",
     "mocha": "^1.21.4"
   }
 }
