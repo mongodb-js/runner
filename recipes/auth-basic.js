@@ -1,12 +1,8 @@
 var path = require('path'),
-  shell = require('../lib/').shell,
-  Options = require('../lib/').Options,
-  fs = require('fs-extra'),
-  standalone = require('./standalone'),
+  bin = require('../lib').bin,
+  Standalone = require('./standalone'),
   mvm = require('mongodb-version-manager'),
   util = require('util'),
-  assert = require('assert'),
-  EventEmitter = require('events').EventEmitter,
   debug = require('debug')('mongodb-runner:recipe:auth-basic');
 
 module.exports = AuthBasic;
@@ -18,78 +14,46 @@ function AuthBasic(opts, fn){
     opts = {};
   }
 
-  AuthBasic.super_.call(this);
-
-  this.on('error', fn);
-  this.on('readable', fn.bind(null));
-
-  this.options = new Options(this, {
-    port: 27001,
-    keyFile: path.resolve(__dirname + '/../keys/mongodb-keyfile')
-  });
-
-  this.options.on('readable', this.setup.bind(this));
+  opts.name = opts.name || 'auth-basic';
+  opts.port = opts.port || 27001;
+  opts.keyfile = opts.keyfile || path.resolve(__dirname + '/../keys/mongodb-keyfile');
+  AuthBasic.super_.call(this, opts, fn);
 }
-util.inherits(AuthBasic, EventEmitter);
-
-AuthBasic.prototype.mongod = null;
-
-AuthBasic.prototype.name = 'auth-basic';
-
-AuthBasic.prototype.shell = function(script, fn){
-  var opts = {
-    port: this.options.get('port'),
-    dbpath: this.options.get('dbpath') + '-shell'
-  };
-  shell(opts, script, fn);
-};
+util.inherits(AuthBasic, Standalone);
 
 AuthBasic.prototype.setup = function(){
-  var opts = {
-    name: 'setup|' + this.name,
-    clear: true,
-    dbpath: this.options.get('dbpath'),
-    port: this.options.get('port')
-  };
-
-  assert(this.options.get('dbpath'), 'wtf: dbpath option is ' + JSON.stringify(this.options.get('dbpath')));
+  var self = this,
+    opts = {
+      name: this.options.get('name'),
+      dbpath: this.options.get('dbpath'),
+      port: this.options.get('port')
+    };
 
   debug('preparing %j', opts);
-  this.mongod = standalone(opts, function(err){
-    if(err) return this.emit('error', err);
+  this.mongod = bin.mongod(opts, function(err){
+    if(err) return self.emit('error', err);
 
     debug('create the initial root user');
-
-    // @todo: move to shell.createUser
-    mvm.is('< 2.6.x', function(err, hasNewAuth){
-      var method = hasNewAuth ? 'createUser' : 'addUser';
-      this.shell("db.getMongo().getDB('admin')."+method+"(" +
+    mvm.is('< 2.6.x', function(err, hasOldAuth){
+      debug('has 2.4 auth?', hasOldAuth);
+      var method = hasOldAuth ? 'addUser' : 'createUser';
+      self.shell("db.getMongo().getDB('admin')."+method+"(" +
         "{user: 'root', pwd: 'password', roles: ['root']});", function(err){
         if(err) return this.emit('error', err);
 
         debug('restarting to enable auth');
-        this.mongod.stop(function(){
-          this.mongod = standalone({
+        self.mongod.stop(function(){
+          self.mongod = bin.mongod({
             dbpath: opts.dbpath,
             port: opts.port,
-            name: this.name,
-            keyFile: path.resolve(__dirname + '/../keys/mongodb-keyfile')
+            name: self.name,
+            keyfile: self.options.get('keyfile')
           }, function(err){
             if(err) return this.emit('error', err);
-            this.emit('readable');
-          }.bind(this));
-        }.bind(this));
-      }.bind(this));
-    }.bind(this));
-  }.bind(this));
-};
-
-AuthBasic.prototype.teardown = function(){
-  this.mongod.stop(function(){
-    fs.remove(this.options.get('dbpath'), function(err){
-      if(err) return this.emit('error', err);
-
-      this.emit('end');
+            self.emit('readable');
+          });
+        });
+      });
     });
-  }.bind(this));
+  });
 };

@@ -10,7 +10,7 @@ module.exports = function(name, fn){
   if(!recipes[name]){
     return fn(new Error('Unknown recipe `'+name+'`'));
   }
-  recipes[name]({}, function(err, res){
+  return recipes[name]({}, function(err, res){
     if(err) return fn(err);
 
     res = res || {};
