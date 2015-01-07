@@ -4,7 +4,7 @@
   "author": "Lucas Hrabovsky <hrabovsky.lucas@gmail.com> (http://imlucas.com)",
   "description": "Starts all of the deployment types for testing",
   "scripts": {
-    "test": "m kill && m ${MONGODB_VERSION} && mocha",
+    "test": "m kill && m ${MONGODB_VERSION} && DEBUG=mon* mocha",
     "build": "gulp build",
     "dist": "gulp dist",
     "start": "bin/mongodb-runner.js"

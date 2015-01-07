@@ -18,16 +18,22 @@ module.exports = function(name, opts, fn){
     return fn(new Error('Unknown recipe `'+name+'`'));
   }
 
-  debug('starting recipe %s', name);
-  return recipes[name](opts, function(err, res){
+  debug('\n\nstarting recipe %s', name);
+  var prog = recipes[name](opts, function(err, res){
     if(err) return fn(err);
 
     res = res || {};
     res.recipe = name;
+    debug('.....................');
     debug('recipe %s is up', name);
+    debug('.....................');
 
     fn(null, res);
   });
+  prog.on('end', function(){
+    debug('\n\nrecipe %s complete', name);
+  });
+return prog;
 };
 
 module.exports.shell = require('./lib').shell;
