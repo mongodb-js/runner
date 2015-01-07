@@ -15,11 +15,12 @@ function Standalone(opts, fn){
 util.inherits(Standalone, Recipe);
 
 Standalone.prototype.setup = function(){
-  this.debug('starting mongod', this.options.toJSON());
+  this.debug('starting mongod with options %j', this.options);
   var self = this;
   this.mongod = bin.mongod(this.options.toJSON(), function(err){
     if(err) return self.emit('error', err);
     self.emit('readable');
+    self.debug('now readable');
   });
 };
 
