@@ -1,33 +1,73 @@
-var debug = require('debug')('mongodb-runner:replicaset'),
-  shell = require('../lib/shell');
+var bin = require('../lib').bin,
+  Recipe = require('./recipe'),
+  util = require('util'),
+  fs = require('fs-extra'),
+  os = require('os'),
+  assert = require('assert');
 
-module.exports = function(opts, fn){
+module.exports = ReplicaSet;
+
+function ReplicaSet(opts, fn){
+  if (!(this instanceof ReplicaSet)) return new ReplicaSet(opts, fn);
+
   if(typeof opts === 'function'){
     fn = opts;
     opts = {};
   }
 
-  opts = opts || {};
-  opts.rs = opts.rs || 'replicom';
-  opts.instances = parseInt((opts.instances || 3), 10);
-  opts.startPort = parseInt((opts.startPort || 6000), 10);
+  opts.name = opts.name || 'replicom';
+  opts.port = opts.port || 27700;
+  opts.instances = opts.instances || 1;
+  opts.replSet = opts.name;
+  opts.uri = 'mongodb://' + os.hostname() + ':' + opts.port;
 
-  var hosts = [];
-  for(var i = 0; i < opts.instances; i++){
-    var port = opts.startPort + i;
-    hosts.push('localhost:'+port);
-  }
+  ReplicaSet.super_.call(this, opts, fn);
+}
+util.inherits(ReplicaSet, Recipe);
 
-  debug('starting replicaset', opts);
+// ReplicaSet.prototype.setup = function(){
+//   var opts = {
+//     name: this.options.get('name'),
+//     dbpath: this.options.get('dbpath'),
+//     port: this.options.get('port'),
+//     instances: this.options.get('instances')
+//   };
 
-  shell('var opts = {name: \''+opts.rs+'\', nodes: '+opts.instances+', useHostName: false, startPort: '+opts.startPort+'};',
-    'var rs = new ReplSetTest(opts);',
-    'rs.startSet();', 'rs.initiate();',
-    function(err){
-      if(err) return fn(err);
+//   debug('preparing %j', opts);
+//   var code = [
+//     'var opts = {name: \''+opts.name+'\', nodes: '+opts.instances+', useHostName: false, startPort: '+opts.port+'};',
+//     'var rs = new ReplSetTest(opts);',
+//     'rs.startSet();', 'rs.initiate();',
+//     ].join('\n');
+//   this.shell(code, function(err){
+//     if(err) return this.emit('error', err);
+//     this.emit('readable');
+//   }.bind(this));
+// };
 
-      fn(null, {
-        uri: 'mongodb://'+hosts.join(',')+'?replicaSet=' + opts.rs
-      });
+ReplicaSet.prototype.setup = function(){
+  assert(this.options.get('replSet'), 'replSet option required');
+  this.debug('starting mongod with options %j', this.options);
+  this.mongod = bin.mongod(this.options.toJSON(), function(err){
+    if(err) return this.emit('error', err);
+
+    this.debug('initiating replicaset');
+    this.shell('rs.initiate(\''+os.hostname()+':'+this.options.get('port')+'\');', function(err){
+      if(err) return this.emit('error', err);
+
+      this.emit('readable');
+    }.bind(this));
+  }.bind(this));
+};
+
+ReplicaSet.prototype.teardown = function(){
+  this.debug('stopping mongod');
+  var self = this;
+  this.mongod.stop(function(){
+    self.debug('remove dbpath', self.options.get('dbpath'));
+    fs.remove(self.options.get('dbpath'), function(err){
+      if(err) return self.emit('error', err);
+      self.emit('end');
     });
+  });
 };

@@ -39,7 +39,7 @@ AuthBasic.prototype.setup = function(){
       var method = hasOldAuth ? 'addUser' : 'createUser';
       self.shell("db.getMongo().getDB('admin')."+method+"(" +
         "{user: 'root', pwd: 'password', roles: ['root']});", function(err){
-        if(err) return this.emit('error', err);
+        if(err) return self.emit('error', err);
 
         debug('restarting to enable auth');
         self.mongod.stop(function(){
@@ -49,7 +49,7 @@ AuthBasic.prototype.setup = function(){
             name: self.name,
             keyfile: self.options.get('keyfile')
           }, function(err){
-            if(err) return this.emit('error', err);
+            if(err) return self.emit('error', err);
             self.emit('readable');
           });
         });

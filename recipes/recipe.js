@@ -3,17 +3,20 @@ var shell = require('../lib').shell,
   util = require('util'),
   async = require('async'),
   EventEmitter = require('events').EventEmitter,
+  _ = require('underscore'),
   debug = require('debug')('mongodb-runner:recipe');
 
 module.exports = Recipe;
 
 function Options(defaults){
-  this._data = {
+  this._data = defaults || {};
+
+  _.defaults(this._data, {
     port: defaults.port || 27017,
     keyfile: defaults.keyfile || undefined,
     name: defaults.name || 'mongodb',
     dbpath: undefined
-  };
+  });
 
   var self = this;
   var tasks = [function(cb){
@@ -63,7 +66,9 @@ function Recipe(opts, fn){
   this.debug = require('debug')('mongodb-runner:' + opts.name);
 
   this.on('error', fn);
-  this.on('readable', fn.bind(null, null));
+  this.on('readable', function(){
+    fn(null, this.options.toJSON());
+  }.bind(this));
 
   this.options = new Options(opts)
     .on('readable', this.setup.bind(this));
