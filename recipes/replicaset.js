@@ -19,7 +19,8 @@ function ReplicaSet(opts, fn){
   opts.port = opts.port || 27700;
   opts.instances = opts.instances || 1;
   opts.replSet = opts.name;
-  opts.uri = 'mongodb://' + os.hostname() + ':' + opts.port;
+  opts.hostname = os.hostname();
+  opts.uri = 'mongodb://' + opts.hostname + ':' + opts.port;
 
   ReplicaSet.super_.call(this, opts, fn);
 }
@@ -52,7 +53,7 @@ ReplicaSet.prototype.setup = function(){
     if(err) return this.emit('error', err);
 
     this.debug('initiating replicaset');
-    this.shell('rs.initiate(\''+os.hostname()+':'+this.options.get('port')+'\');', function(err){
+    this.shell('rs.initiate(\''+this.options.get('hostname')+':'+this.options.get('port')+'\');', function(err){
       if(err) return this.emit('error', err);
 
       this.emit('readable');
