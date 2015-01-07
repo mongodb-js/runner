@@ -6,13 +6,20 @@ var bridge = require('mongodb-bridge'),
   windows = require('os').platform() === 'win32',
   debug = require('debug')('mongodb-runner');
 
-module.exports = function(name, fn){
+module.exports = function(name, opts, fn){
+  if(typeof opts === 'function'){
+    fn = opts;
+    opts = {};
+  }
+
   name = name || process.env.RUNNER_RECIPE || 'all';
+
   if(!recipes[name]){
     return fn(new Error('Unknown recipe `'+name+'`'));
   }
+
   debug('starting recipe %s', name);
-  return recipes[name]({}, function(err, res){
+  return recipes[name](opts, function(err, res){
     if(err) return fn(err);
 
     res = res || {};
