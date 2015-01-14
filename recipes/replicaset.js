@@ -53,12 +53,13 @@ ReplicaSet.prototype.setup = function(){
     if(err) return this.emit('error', err);
 
     this.debug('initiating replicaset');
+    console.log('RUNNING rs.initiate');
     this.shell('rs.initiate(\''+this.options.get('hostname')+':'+this.options.get('port')+'\');', function(err){
       if(err) return this.emit('error', err);
-
-      this.emit('readable');
+      // @todo: wait for "database writes are now permitted" to show up in logs
     }.bind(this));
-  }.bind(this));
+  }.bind(this))
+  .on('readable', this.emit.bind(this, 'readable'));
 };
 
 ReplicaSet.prototype.teardown = function(){

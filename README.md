@@ -61,17 +61,6 @@ shell('var opts = {name: \''+opts.name+'\', nodes: '+opts.instances+', useHostNa
   fn);
 ```
 
-## Todo
-
-- [x] use lone to prebake binaries and upload to releases
-- [x] support auth
-- [ ] HTTP control like mongodb-bridge
-- [ ] Use -version-manager to prepare env, add to travis, add ci gulp task
-- [ ] option for version, integrated with -version-manager
-- [ ] integrate @imlucas/mongodb-bridge fully as a option `bridge: true`.
-    make mongodb-bridge capable of reconfiguring oplog.rs automatically
-    [per kristina's example](http://www.kchodorow.com/blog/2011/04/20/simulating-network-paritions-with-mongobridge/)
-
 ## License
 
 MIT
