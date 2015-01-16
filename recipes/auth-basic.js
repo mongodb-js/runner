@@ -23,11 +23,9 @@ util.inherits(AuthBasic, Standalone);
 
 AuthBasic.prototype.setup = function(){
   var self = this,
-    opts = {
-      name: this.options.get('name'),
-      dbpath: this.options.get('dbpath'),
-      port: this.options.get('port')
-    };
+    opts = this.options.toJSON();
+
+  delete opts.keyFile;
 
   debug('preparing %j', opts);
   this.mongod = bin.mongod(opts, function(err){
@@ -43,12 +41,7 @@ AuthBasic.prototype.setup = function(){
 
         debug('restarting to enable auth');
         self.mongod.stop(function(){
-          self.mongod = bin.mongod({
-            dbpath: opts.dbpath,
-            port: opts.port,
-            name: self.name,
-            keyfile: self.options.get('keyfile')
-          }, function(err){
+          self.mongod = bin.mongod(self.options.toJSON(), function(err){
             if(err) return self.emit('error', err);
             self.emit('readable');
           });

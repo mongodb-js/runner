@@ -31,6 +31,7 @@ describe('run', function(){
           assert.ifError(err);
           return;
         }
+        debug('connected.  making sure we can run a query');
         db.db('local').collection('oplog.rs').find().toArray(function(err, docs){
           if(err){
             prog.teardown();
