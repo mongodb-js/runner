@@ -26,26 +26,6 @@ function ReplicaSet(opts, fn){
 }
 util.inherits(ReplicaSet, Recipe);
 
-// ReplicaSet.prototype.setup = function(){
-//   var opts = {
-//     name: this.options.get('name'),
-//     dbpath: this.options.get('dbpath'),
-//     port: this.options.get('port'),
-//     instances: this.options.get('instances')
-//   };
-
-//   debug('preparing %j', opts);
-//   var code = [
-//     'var opts = {name: \''+opts.name+'\', nodes: '+opts.instances+', useHostName: false, startPort: '+opts.port+'};',
-//     'var rs = new ReplSetTest(opts);',
-//     'rs.startSet();', 'rs.initiate();',
-//     ].join('\n');
-//   this.shell(code, function(err){
-//     if(err) return this.emit('error', err);
-//     this.emit('readable');
-//   }.bind(this));
-// };
-
 ReplicaSet.prototype.setup = function(){
   assert(this.options.get('replSet'), 'replSet option required');
   this.debug('starting mongod with options %j', this.options);
@@ -53,13 +33,17 @@ ReplicaSet.prototype.setup = function(){
     if(err) return this.emit('error', err);
 
     this.debug('initiating replicaset');
-    console.log('RUNNING rs.initiate');
     this.shell('rs.initiate(\''+this.options.get('hostname')+':'+this.options.get('port')+'\');', function(err){
       if(err) return this.emit('error', err);
-      // @todo: wait for "database writes are now permitted" to show up in logs
     }.bind(this));
   }.bind(this))
-  .on('readable', this.emit.bind(this, 'readable'));
+  .on('readable', function(){
+    this.shell('rs.status();', function(err, res){
+      if(err) return this.emit('error', err);
+      this.debug('replicaset status: %j', res);
+      this.emit('readable');
+    }.bind(this));
+  }.bind(this));
 };
 
 ReplicaSet.prototype.teardown = function(){
