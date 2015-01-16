@@ -5,7 +5,7 @@ var debug = require('debug')('mongodb-runner:test');
 
 describe('run', function(){
   it('should start a standalone', function(done){
-    var prog = run('standalone', function(err){
+    var prog = run('standalone', {smallfiles: true}, function(err){
       if(err) return done(err);
       prog.teardown();
     })
@@ -13,7 +13,7 @@ describe('run', function(){
   });
 
   it('should start with auth', function(done){
-    var prog = run('auth-basic', function(err){
+    var prog = run('auth-basic', {smallfiles: true}, function(err){
       if(err) return done(err);
       prog.teardown();
     })
@@ -21,7 +21,7 @@ describe('run', function(){
   });
 
   it('should start a replica set', function(done){
-    var prog = run('replicaset', function(err){
+    var prog = run('replicaset', {smallfiles: true, oplogSize: 10}, function(err){
       if(err) return done(err);
       var uri = prog.options.get('uri');
       debug('connecting to ', uri);
