@@ -12,10 +12,10 @@
   "bin": {
     "mongodb-runner": "./bin/mongodb-runner.js"
   },
-  "homepage": "http://github.com/imlucas/mongodb-runner",
+  "homepage": "http://github.com/mongodb-js/runner",
   "repository": {
     "type": "git",
-    "url": "git://github.com/imlucas/mongodb-runner.git"
+    "url": "git://github.com/mongodb-js/runner.git"
   },
   "keywords": [
     "mongodb",
