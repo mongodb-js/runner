@@ -1,6 +1,6 @@
 # mongodb-runner
 
-[![build status](https://secure.travis-ci.org/imlucas/mongodb-runner.png)](http://travis-ci.org/imlucas/mongodb-runner)
+[![Build Status](https://travis-ci.org/mongodb-js/runner.svg?branch=master)](https://travis-ci.org/mongodb-js/runner)
 
 Starts and sets up deployment recipes for testing against by piping to
 `mongo` shell and reusing all of the internal functions.
