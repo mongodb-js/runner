@@ -19,14 +19,17 @@ function Options(defaults){
   });
 
   var self = this;
-  var tasks = [function(cb){
-    options.dbpath(self.get('name'), function(err, p){
-      if(err) return cb(err);
-      self.set('dbpath', p);
-      debug('resolved dbpath');
-      cb();
+  var tasks = [];
+  if(this.get('dbpath') === undefined) {
+    tasks.push(function(cb){
+      options.dbpath(self.get('name'), function(err, p){
+        if(err) return cb(err);
+        self.set('dbpath', p);
+        debug('resolved dbpath');
+        cb();
+      });
     });
-  }];
+  }
 
   if(this.get('keyfile') !== undefined){
     tasks.push(function(cb){
