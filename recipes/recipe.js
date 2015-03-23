@@ -29,6 +29,14 @@ function Options(defaults){
         cb();
       });
     });
+  } else {
+    tasks.push(function(cb){
+      options.dbpath(self.get('dbpath'), function(err, p){
+        if(err) return cb(err);
+        debug('resolved dbpath');
+        cb();
+      });
+    });
   }
 
   if(this.get('keyfile') !== undefined){
