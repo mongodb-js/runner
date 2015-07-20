@@ -1,0 +1,22 @@
+Usage: mongodb-runner <start|stop> [options]
+
+Start/stop mongodb for testing.
+
+Options:
+  --topology=<topology>
+  --pidpath=<pidpath>           Where to put pid files [Default: `~/mongodb/pids`].
+
+--topology=standalone
+  --name=<name>                 The replSet name [Default: `my-standalone`].
+  --port=<port>                 Port to start mongod on [Default: `27017`].
+  --dbpath=<dbpath>             Where to put the data [Default: `~/.mongodb/data/#{name}`]
+  --logpath=<logpath>           [Default: `~/.mongodb/#{name}.log`]
+
+--topology=replicaset
+  --name=<name>                 The replSet name [Default: `my-replicaset`].
+  --port=<port>                 The starting port to use for mongod instances [Default: `31000`].
+  --dbpath=<dbpath>             [Default: `~/.mongodb/data/#{name}-#{instance_id}`]
+  --logpath=<logpath>           [Default: `~/.mongodb/#{name}-#{instance_id}.log`]
+  --arbiters=<n>                How many arbiters to start [Default: `0`].
+  --passives=<n>                How many passive instances to start [Default: `1`].
+  --secondaries=<n>             How many secondary instances to start [Default: `2`]. Maps to `secondaries` option.

@@ -1,27 +1,36 @@
 #!/usr/bin/env node
-var runner = require('../'),
-  yargs = require('yargs');
 
-runner(yargs.argv._[0], function(err, res){
-  if(err) return console.error(err);
-  if(res && res.uri){
-    console.log(JSON.stringify({
-      name: 'ready',
-      uri: res.uri,
-      recipe: res.recipe
-    }));
-  }
+var path = require('path');
+var fs = require('fs');
+/*eslint no-sync:0*/
+var usage = fs.readFileSync(path.resolve(__dirname, '../usage.txt')).toString();
+var args = require('minimist')(process.argv.slice(2), {
+  boolean: ['debug']
 });
 
-// @todo: This should just start an http ctl server like mongodb-bridge
-// @todo: Fork mongo procs? like so:
-// Example of detaching a long-running process and redirecting its output to a file:
-//  var fs = require('fs'),
-//      spawn = require('child_process').spawn,
-//      out = fs.openSync('./out.log', 'a'),
-//      err = fs.openSync('./out.log', 'a');
-//  var child = spawn('prg', [], {
-//    detached: true,
-//    stdio: [ 'ignore', out, err ]
-//  });
-//  child.unref();
+if (args.debug) {
+  process.env.DEBUG = 'mongodb-runner';
+}
+var run = require('../');
+var pkg = require('../package.json');
+
+args.action = args._[0] || 'start';
+
+if (args.help || args.h) {
+  console.error(usage);
+  process.exit(1);
+}
+if (args.version) {
+  console.error(pkg.version);
+  process.exit(1);
+}
+
+run(args, function(err) {
+  if (err) {
+    console.error(err);
+    process.exit(1);
+    return;
+  }
+  console.log('ok');
+  process.exit(0);
+});
