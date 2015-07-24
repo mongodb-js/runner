@@ -31,6 +31,10 @@ run(args, function(err) {
     process.exit(1);
     return;
   }
-  console.log('ok');
+  if (args.action === 'start') {
+    console.log('MongoDB started\nmongo localhost:' + args.port);
+  } else {
+    console.log('ok');
+  }
   process.exit(0);
 });
