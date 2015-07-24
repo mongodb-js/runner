@@ -4,3 +4,4 @@
 test/
 .lone
 gulpfile.js
+coverage/
