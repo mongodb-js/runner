@@ -1,8 +1,8 @@
-var gulp = require('gulp'),
-  path = require('path'),
-  exec = require('child_process').exec,
-  release = require('github-release'),
-  pkg = require('./package.json');
+var gulp = require('gulp');
+var path = require('path');
+var exec = require('child_process').exec;
+var release = require('github-release');
+var pkg = require('./package.json');
 
 gulp.task('dist', ['upload']);
 
@@ -32,13 +32,13 @@ gulp.task('keyfile', function(done) {
 });
 
 gulp.task('pem', function(done) {
-  var out = path.resolve('./keys/mongodb-cert.crt'),
-    keyout = path.resolve('./keys/mongodb-cert.key'),
-    pem = path.resolve('./keys/mongodb.pem');
+  var out = path.resolve('./keys/mongodb-cert.crt');
+  var keyout = path.resolve('./keys/mongodb-cert.key');
+  var pem = path.resolve('./keys/mongodb.pem');
 
-  exec('openssl req -new -x509 -days 365 -nodes ' +
-    '-out ' + out + ' -keyout ' + keyout + ' ' +
-    '-subj "/C=US/ST=NY/L=NYC/CN=www.mongodb.com"', function(err) {
+  exec('openssl req -new -x509 -days 365 -nodes'
+    + ' -out ' + out + ' -keyout ' + keyout
+    + ' -subj "/C=US/ST=NY/L=NYC/CN=www.mongodb.com"', function(err) {
       if (err) return done(err);
 
       exec('cat ' + out + ' ' + keyout + ' > ' + pem, function(err) {
