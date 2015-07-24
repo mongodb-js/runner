@@ -3,7 +3,8 @@
   "plugins": [
         "esformatter-quotes",
         "esformatter-semicolons",
-        "esformatter-braces"
+        "esformatter-braces",
+        "esformatter-var-each"
     ],
     "quotes": {
         "type": "single",
