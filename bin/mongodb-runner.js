@@ -14,7 +14,7 @@ if (args.debug) {
 var run = require('../');
 var pkg = require('../package.json');
 
-args.action = args._[0] || 'start';
+args.action = args.action || args._[0] || 'start';
 
 if (args.help || args.h) {
   console.error(usage);
