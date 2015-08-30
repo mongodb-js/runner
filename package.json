@@ -39,7 +39,7 @@
     "minimist": "^1.1.2",
     "mkdirp": "^0.5.1",
     "mongodb-dbpath": "0.0.1",
-    "mongodb-tools": "^1.0.5",
+    "mongodb-tools": "mongodb-js/mongodb-tools",
     "untildify": "~2.1.0"
   },
   "devDependencies": {
