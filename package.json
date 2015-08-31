@@ -40,6 +40,7 @@
     "mkdirp": "^0.5.1",
     "mongodb-dbpath": "0.0.1",
     "mongodb-tools": "mongodb-js/mongodb-tools",
+    "mongodb-version-manager": "mongodb-js/mongodb-version-manager",
     "untildify": "~2.1.0"
   },
   "devDependencies": {
