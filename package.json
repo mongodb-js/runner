@@ -35,7 +35,8 @@
   "license": "Apache-2.0",
   "dependencies": {
     "backoff": "^2.4.1",
-    "debug": "~2.2.0",
+    "clui": "^0.3.1",
+    "debug": "^2.2.0",
     "lodash.defaults": "^3.1.2",
     "minimist": "^1.1.2",
     "mkdirp": "^0.5.1",
