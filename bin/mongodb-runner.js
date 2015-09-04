@@ -14,7 +14,6 @@ if (args.debug) {
 var run = require('../');
 var pkg = require('../package.json');
 var clui = require('clui');
-var format = require('util').format;
 var debug = require('debug')('mongodb-runner:bin');
 
 args.action = args.action || args._[0] || 'start';
@@ -33,12 +32,12 @@ debug('running action `%s`', args.action);
 if (args.action === 'start') {
   new clui.Spinner('Starting a MongoDB deployment to test against...').start();
 }
-run(args, function(err, res) {
+run(args, function(err) {
   if (err) {
     console.error(err);
     process.exit(1);
     return;
   }
-  debug('ran action `%s` successfully on `%s`', args.action, res.name);
+  debug('ran action `%s` successfully', args.action);
   process.exit(0);
 });
