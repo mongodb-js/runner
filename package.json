@@ -34,6 +34,7 @@
   ],
   "license": "Apache-2.0",
   "dependencies": {
+    "async": "^1.4.2",
     "backoff": "^2.4.1",
     "clui": "^0.3.1",
     "debug": "^2.2.0",
