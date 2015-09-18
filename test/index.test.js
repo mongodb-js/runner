@@ -186,6 +186,97 @@ describe('Test Spawning MongoDB Deployments', function() {
     });
   });
 
+ describe('Cluster', function() {
+
+    describe('Simple', function() {
+
+      var opts = {
+        action: 'start',
+        name: 'mongodb-runner-test-cluster',
+        shardPort: 29000,
+        configPort: 29100,
+        topology: 'cluster'
+      };
+
+      it('should start a cluster', function(done) {
+        run(opts, function(err) {
+          if (err) return done(err);
+          opts.action = 'stop';
+          run(opts, function(err) {
+            if (err) return done(err);
+            done();
+          });
+        });
+      });
+    });
+
+    describe('Username/Password Auth', function() {
+      var opts = {
+        action: 'start',
+        name: 'mongodb-runner-test-cluster-user-pass',
+        shardPort: 32000,
+        configPort: 32100,
+        port: 32200,
+        shards: 3,
+        auth_mechanism: "SCRAM_SHA_1",
+        username: 'adminUser',
+        password: 'adminPass',
+        topology: 'cluster',
+        keyFile: 'mongodb-keyfile',
+      };
+      var tmpDir = null;
+      var tmpKeyFile = null;
+
+      before(function(done) {
+        tmpDir = tmp.dirSync({unsafeCleanup:true});
+        opts.dbpath = tmpDir.name;
+        debug("DB Dir: ", tmpDir.name);
+        
+        tmpKeyFile = tmp.fileSync();
+        fs.writeFileSync(tmpKeyFile.name, 'testkeyfiledata');
+        debug("KeyFile: ", tmpKeyFile.name);
+        opts.keyFile = tmpKeyFile.name;
+
+        run(opts, function(err) {
+          if (err) return done(err);
+          done();
+        });
+      });
+
+      after(function(done) {
+        opts.action = 'stop';
+        run(opts, function(err) {
+          if (err) return done(err);
+          //tmpDir.removeCallback();
+          //tmpKeyFile.removeCallback();
+          done();
+        });
+      });
+
+      it('should fail inserting with bad permissions', function(done) {
+        verifyNoUserPassFailure(opts.port, function (err) {
+          if (err) return done(err);
+          done();
+        });
+      });
+
+      it('should fail connecting with bad credentials', function(done) {
+        verifyBadUserPassFailure(opts.port, "foo", "bar", function (err) {
+          if (err) return done(err);
+          done();
+        });
+      });
+
+      it('should connect and insert with good credentials', function(done) {
+        verifyUserPassSuccess(opts.port, opts.username, opts.password, function (err) {
+          if (err) return done(err);
+          done();
+        });
+      });
+    });
+  });
+
+
 });
 
 var verifyNoUserPassFailure = function (port, callback){
