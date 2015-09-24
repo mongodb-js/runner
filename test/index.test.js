@@ -131,8 +131,7 @@ describe('Test Spawning MongoDB Deployments', function() {
         auth_mechanism: "SCRAM_SHA_1",
         username: 'adminUser',
         password: 'adminPass',
-        topology: 'replicaset',
-        keyFile: 'mongodb-keyfile',
+        topology: 'replicaset'
       };
       var tmpDir = null;
       var tmpKeyFile = null;
@@ -195,6 +194,7 @@ describe('Test Spawning MongoDB Deployments', function() {
         name: 'mongodb-runner-test-cluster',
         shardPort: 29000,
         configPort: 29100,
+        shards: 3,
         topology: 'cluster'
       };
 
@@ -210,7 +210,7 @@ describe('Test Spawning MongoDB Deployments', function() {
       });
     });
 
-    describe('Username/Password Auth', function() {
+    describe.only('Username/Password Auth', function() {
       var opts = {
         action: 'start',
         name: 'mongodb-runner-test-cluster-user-pass',
@@ -221,8 +221,7 @@ describe('Test Spawning MongoDB Deployments', function() {
         auth_mechanism: "SCRAM_SHA_1",
         username: 'adminUser',
         password: 'adminPass',
-        topology: 'cluster',
-        keyFile: 'mongodb-keyfile',
+        topology: 'cluster'
       };
       var tmpDir = null;
       var tmpKeyFile = null;
@@ -231,7 +230,7 @@ describe('Test Spawning MongoDB Deployments', function() {
         tmpDir = tmp.dirSync({unsafeCleanup:true});
         opts.dbpath = tmpDir.name;
         debug("DB Dir: ", tmpDir.name);
-        
+
         tmpKeyFile = tmp.fileSync();
         fs.writeFileSync(tmpKeyFile.name, 'testkeyfiledata');
         debug("KeyFile: ", tmpKeyFile.name);
@@ -243,7 +242,7 @@ describe('Test Spawning MongoDB Deployments', function() {
         });
       });
 
-      after(function(done) {
+      /*after(function(done) {
         opts.action = 'stop';
         run(opts, function(err) {
           if (err) return done(err);
@@ -251,7 +250,7 @@ describe('Test Spawning MongoDB Deployments', function() {
           //tmpKeyFile.removeCallback();
           done();
         });
-      });
+      });*/
 
       it('should fail inserting with bad permissions', function(done) {
         verifyNoUserPassFailure(opts.port, function (err) {
@@ -283,13 +282,13 @@ var verifyNoUserPassFailure = function (port, callback){
   debug("Verifying Auth");
   mongodb.MongoClient.connect(format('mongodb://localhost:%s/test?authSource=admin', port),
                               function(err, db) {
-    if (err) return callback(err);
+    assert.ifError(err);
     db.collection('fruit').insertOne({'variety':'apple'}, function(err){
       assert(err, 'No error on insert with no authorization');
       callback(null);
     });
   });
-}
+};
 
 var verifyBadUserPassFailure = function (port, username, password, callback){
   debug("Verifying Auth");
@@ -298,17 +297,17 @@ var verifyBadUserPassFailure = function (port, username, password, callback){
     assert(err,'No error on connect with bad credentials');
     callback(null);
   });
-}
+};
 
 var verifyUserPassSuccess = function (port, username, password, callback){
   debug("Verifying Auth");
   var url = format('mongodb://%s:%s@localhost:%s/test?authSource=admin',
                    username, password, port);
   mongodb.MongoClient.connect(url, function(err, db) {
-    if (err) return callback(err);
-    db.collection('fruit').insertOne({'variety':'apple'}, function(err){
+    assert.ifError(err);
+    db.collection('fruit').insertOne({'variety':'apple'}, function(err, result){
       assert.ifError(err);
       callback(null);
     });
   });
-}
+};
