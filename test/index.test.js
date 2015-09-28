@@ -30,10 +30,6 @@ describe('Test Spawning MongoDB Deployments', function() {
         done();
       });
 
-      after(function(done) {
-        tmpobj.removeCallback();
-        done();
-      });
 
       it('should start a standalone', function(done) {
         run(opts, function(err) {
@@ -110,6 +106,13 @@ describe('Test Spawning MongoDB Deployments', function() {
         port: 28000,
         topology: 'replicaset'
       };
+
+      before(function(done) {
+        tmpobj = tmp.dirSync({unsafeCleanup:true});
+        debug("DB Dir: ", tmpobj.name);
+        opts.dbpath = tmpobj.name;
+        done();
+      });
 
       it('should start a replicaset', function(done) {
         run(opts, function(err) {
@@ -198,6 +201,13 @@ describe('Test Spawning MongoDB Deployments', function() {
         topology: 'cluster'
       };
 
+      before(function(done) {
+        tmpobj = tmp.dirSync({unsafeCleanup:true});
+        debug("DB Dir: ", tmpobj.name);
+        opts.dbpath = tmpobj.name;
+        done();
+      });
+
       it('should start a cluster', function(done) {
         run(opts, function(err) {
           if (err) return done(err);
@@ -210,7 +220,7 @@ describe('Test Spawning MongoDB Deployments', function() {
       });
     });
 
-    describe.only('Username/Password Auth', function() {
+    describe('Username/Password Auth', function() {
       var opts = {
         action: 'start',
         name: 'mongodb-runner-test-cluster-user-pass',
@@ -242,7 +252,7 @@ describe('Test Spawning MongoDB Deployments', function() {
         });
       });
 
-      /*after(function(done) {
+      after(function(done) {
         opts.action = 'stop';
         run(opts, function(err) {
           if (err) return done(err);
@@ -250,7 +260,7 @@ describe('Test Spawning MongoDB Deployments', function() {
           //tmpKeyFile.removeCallback();
           done();
         });
-      });*/
+      });
 
       it('should fail inserting with bad permissions', function(done) {
         verifyNoUserPassFailure(opts.port, function (err) {
