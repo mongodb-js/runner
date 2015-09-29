@@ -11,5 +11,5 @@ cache:
 after_script: "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
 
 env:
-  - DEBUG=* MONGODB_VERSION=2.4.x
   - DEBUG=* MONGODB_VERSION=2.6.x
+  - DEBUG=* MONGODB_VERSION=3.1.x
