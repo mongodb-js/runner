@@ -23,7 +23,7 @@ describe('run', function() {
     });
   });
 
-  it('should start a replicaset', function(done) {
+  it.skip('should start a replicaset', function(done) {
     var opts = {
       action: 'start',
       name: 'mongodb-runner-test-replicaset',
