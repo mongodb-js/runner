@@ -1,9 +1,43 @@
-# mongodb-runner
+# mongodb-runner [![][npm_img]][npm_url] [![][travis_img]][travis_url] [![][appveyor_img]][appveyor_url] [![][gitter_img]][gitter_url]
 
-[![Build Status](https://travis-ci.org/mongodb-js/runner.svg?branch=master)](https://travis-ci.org/mongodb-js/runner)
+> Easily install and run MongoDB to test your code against it.
 
-Starts and sets up deployment recipes for testing against by piping to
-`mongo` shell and reusing all of the internal functions.
+## Example
+
+Modify your `package.json` to start and stop MongoDB before and after your tests
+automatically when you run `npm test`:
+
+```json
+{
+  "scripts": {
+    "pretest": "mongodb-runner start",
+    "test": "mocha",
+    "posttest": "mongodb-runner stop"
+  }
+}
+```
+
+Update your `.travis.yml` to run your tests against the full version + topology matrix:
+
+```yaml
+language: node_js
+cache:
+  directories:
+    - node_modules
+env:
+  - MONGODB_VERSION=2.6.x MONGODB_TOPOLOGY=standalone
+  - MONGODB_VERSION=3.0.x MONGODB_TOPOLOGY=standalone
+  - MONGODB_VERSION=3.1.x MONGODB_TOPOLOGY=standalone
+  - MONGODB_VERSION=2.6.x MONGODB_TOPOLOGY=replicaset
+  - MONGODB_VERSION=3.0.x MONGODB_TOPOLOGY=replicaset
+  - MONGODB_VERSION=3.1.x MONGODB_TOPOLOGY=replicaset
+  - MONGODB_VERSION=2.6.x MONGODB_TOPOLOGY=cluster
+  - MONGODB_VERSION=3.0.x MONGODB_TOPOLOGY=cluster
+  - MONGODB_VERSION=3.1.x MONGODB_TOPOLOGY=cluster
+```
+
+And :tada: Now you're fully covered for all of those all of those edge cases the full
+version + topology matrix can present!
 
 
 ## Usage
@@ -44,62 +78,15 @@ Options depending on `--topology`:
 
 ```
 
-## Example
-
-```javascript
-var mongodb = require('mongodb-runner');
-
-// Start a standalone, standalone with auth, replica set, and cluster
-// process.env.DEBUG = 'mongodb*'; // uncomment me to get stdout from shell commands
-mongodb(function(err){
-  if(err) return console.error('Uhoh...', err);
-  console.log('MongoDB deployments for testing ready!');
-  // do tests and stuff
-  // all processes started by runner will be SIGTERM'd when this process exits.
-});
-
-// start just a standalone
-mongodb({port: 27018, dbpath: '/ebs/data/'+process.env.JOB_ID+'_standalone'}, function(err){
-  if(err) return console.error('Uhoh...', err);
-  console.log('Standalone ready on localhost:27018!');
-});
-
-// just a replicaset
-mongodb('replicaset', {name: 'replicom', instances: 3, startPort: 6000}, function(err, res){
-  if(err) return console.error('Uhoh...', err);
-  console.log('replicaset ready!', res.uri);
-});
-```
-
-### Shell
-
-```
-npm install -g mongodb-runner
-DEBUG=* mongodb-runner
-```
-
-
-## Under the hood
-
-Just uses the kernel's testing helpers:
-
-
-```javascript
-shell(
-  'var opts = {shards: '+opts.shards+', chunkSize: 1, rs: {oplogSize: 10}, name: \''+opts.db+'\'};',
-  'var st = new ShardingTest(opts);',
-  'st.s.getDB(\''+opts.db+'\').adminCommand({enableSharding: \''+opts.db+'\'});',
-  'st.s.getDB(\''+opts.db+'\').adminCommand({shardCollection: \''+opts.ns+'\', key: {_id: 1 }});',
-fn);
-```
-
-```javascript
-shell('var opts = {name: \''+opts.name+'\', nodes: '+opts.instances+', useHostName: false, startPort: '+opts.startPort+'};',
-  'var rs = new ReplSetTest(opts);',
-  'rs.startSet();', 'rs.initiate();',
-  fn);
-```
-
 ## License
 
-MIT
+Apache 2.0
+
+[travis_img]: https://secure.travis-ci.org/mongodb-js/runner.svg?branch=master
+[travis_url]: https://travis-ci.org/mongodb-js/runner
+[npm_img]: https://img.shields.io/npm/v/mongodb-runner.svg
+[npm_url]: https://www.npmjs.org/package/mongodb-runner
+[appveyor_img]: https://ci.appveyor.com/api/projects/status/voa841j5ke8jtpfh?svg=true
+[appveyor_url]: https://ci.appveyor.com/project/imlucas/mongodb-runner
+[gitter_img]: https://badges.gitter.im/Join%20Chat.svg
+[gitter_url]: https://gitter.im/mongodb-js/mongodb-js
