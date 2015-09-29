@@ -1,15 +1,13 @@
 sudo: false
 language: node_js
 node_js:
-- '0.12'
-notifications:
-  webhooks:
-    urls:
-      - 'https://webhooks.gitter.im/e/aae9117008dad1557aac'
-    on_success: change
-    on_failure: always
-    on_start: false
-script: "npm run-script ci"
+  - 'iojs'
+before_install:
+  - npm install -g npm@3
+script: npm run-script ci
+cache:
+  directories:
+    - node_modules
 after_script: "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
 
 env:

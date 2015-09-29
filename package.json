@@ -26,8 +26,7 @@
     ]
   },
   "precommit": [
-    "check",
-    "test"
+    "check"
   ],
   "keywords": [
     "mongodb",
