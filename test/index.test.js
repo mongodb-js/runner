@@ -6,6 +6,13 @@ var debug = require('debug')('mongodb-runner:index.test');
 var format = require('util').format;
 var tmp = require('tmp');
 var fs = require('fs');
+var helper = require('./helper');
+var verifyUserPassSuccess = helper.verifyUserPassSuccess;
+var verifyWrongMechanismFailure = helper.verifyWrongMechanismFailure;
+var verifyNoUserPassFailure = helper.verifyNoUserPassFailure;
+var verifyBadUserPassFailure = helper.verifyBadUserPassFailure;
+var verifyWrongDBUserPassFailure = helper.verifyWrongDBUserPassFailure;
+
 
 describe('Test Spawning MongoDB Deployments', function() {
   before(function(done) {
@@ -13,82 +20,26 @@ describe('Test Spawning MongoDB Deployments', function() {
   });
 
   describe('Standalone', function() {
+    var opts = {
+      action: 'start',
+      name: 'mongodb-runner-test-standalone',
+      port: 27000
+    };
+    var tmpobj = null;
 
-    describe('Simple', function() {
-
-      var opts = {
-        action: 'start',
-        name: 'mongodb-runner-test-standalone',
-        port: 27000
-      };
-      var tmpobj = null;
-
-      before(function(done) {
-        tmpobj = tmp.dirSync({unsafeCleanup:true});
-        debug("DB Dir: ", tmpobj.name);
-        opts.dbpath = tmpobj.name;
-        done();
-      });
-
-
-      it('should start a standalone', function(done) {
-        run(opts, function(err) {
-          if (err) return done(err);
-          opts.action = 'stop';
-          run(opts, function(err) {
-            if (err) return done(err);
-            done();
-          });
-        });
-      });
+    before(function(done) {
+      tmpobj = tmp.dirSync({ unsafeCleanup: true });
+      debug('DB Dir: ', tmpobj.name);
+      opts.dbpath = tmpobj.name;
+      done();
     });
 
-    describe('Username/Password Auth', function() {
-      var opts = {
-        action: 'start',
-        name: 'mongodb-runner-test-standalone-user-pass',
-        port: 30000,
-        auth_mechanism: "SCRAM_SHA_1",
-        username: "adminUser",
-        password: "adminPass"
-      };
-      var tmpobj = null;
 
-      before(function(done) {
-        tmpobj = tmp.dirSync({unsafeCleanup:true});
-        debug("DB Dir: ", tmpobj.name);
-        opts.dbpath = tmpobj.name;
-        run(opts, function(err) {
-          if (err) return done(err);
-          done();
-        });
-      });
-
-      after(function(done) {
+    it('should start a standalone', function(done) {
+      run(opts, function(err) {
+        if (err) return done(err);
         opts.action = 'stop';
         run(opts, function(err) {
-          if (err) return done(err);
-          tmpobj.removeCallback();
-          done();
-        });
-      });
-
-      it('should fail inserting with bad permissions', function(done) {
-        verifyNoUserPassFailure(opts.port, function (err) {
-          if (err) return done(err);
-          done();
-        });
-      });
-
-      it('should fail connecting with bad credentials', function(done) {
-        verifyBadUserPassFailure(opts.port, "foo", "bar", function (err) {
-          if (err) return done(err);
-          done();
-        });
-      });
-
-      it('should connect and insert with good credentials', function(done) {
-        verifyUserPassSuccess(opts.port, opts.username, opts.password, function (err) {
           if (err) return done(err);
           done();
         });
@@ -97,90 +48,25 @@ describe('Test Spawning MongoDB Deployments', function() {
   });
 
   describe('Replicaset', function() {
+    var opts = {
+      action: 'start',
+      name: 'mongodb-runner-test-replicaset',
+      port: 30000,
+      topology: 'replicaset'
+    };
 
-    describe('Simple', function() {
-
-      var opts = {
-        action: 'start',
-        name: 'mongodb-runner-test-replicaset',
-        port: 28000,
-        topology: 'replicaset'
-      };
-
-      before(function(done) {
-        tmpobj = tmp.dirSync({unsafeCleanup:true});
-        debug("DB Dir: ", tmpobj.name);
-        opts.dbpath = tmpobj.name;
-        done();
-      });
-
-      it('should start a replicaset', function(done) {
-        run(opts, function(err) {
-          if (err) return done(err);
-          opts.action = 'stop';
-          run(opts, function(err) {
-            if (err) return done(err);
-            done();
-          });
-        });
-      });
+    before(function(done) {
+      tmpobj = tmp.dirSync({ unsafeCleanup: true });
+      debug('DB Dir: ', tmpobj.name);
+      opts.dbpath = tmpobj.name;
+      done();
     });
 
-    describe('Username/Password Auth', function() {
-      var opts = {
-        action: 'start',
-        name: 'mongodb-runner-test-replicaset-user-pass',
-        port: 31000,
-        auth_mechanism: "SCRAM_SHA_1",
-        username: 'adminUser',
-        password: 'adminPass',
-        topology: 'replicaset'
-      };
-      var tmpDir = null;
-      var tmpKeyFile = null;
-
-      before(function(done) {
-        tmpDir = tmp.dirSync({unsafeCleanup:true});
-        opts.dbpath = tmpDir.name;
-        debug("DB Dir: ", tmpDir.name);
-
-        tmpKeyFile = tmp.fileSync();
-        fs.writeFileSync(tmpKeyFile.name, 'testkeyfiledata');
-        debug("KeyFile: ", tmpKeyFile.name);
-        opts.keyFile = tmpKeyFile.name;
-
-        run(opts, function(err) {
-          if (err) return done(err);
-          done();
-        });
-      });
-
-      after(function(done) {
+    it('should start a replicaset', function(done) {
+      run(opts, function(err) {
+        if (err) return done(err);
         opts.action = 'stop';
         run(opts, function(err) {
-          if (err) return done(err);
-          //tmpDir.removeCallback();
-          //tmpKeyFile.removeCallback();
-          done();
-        });
-      });
-
-      it('should fail inserting with bad permissions', function(done) {
-        verifyNoUserPassFailure(opts.port, function (err) {
-          if (err) return done(err);
-          done();
-        });
-      });
-
-      it('should fail connecting with bad credentials', function(done) {
-        verifyBadUserPassFailure(opts.port, "foo", "bar", function (err) {
-          if (err) return done(err);
-          done();
-        });
-      });
-
-      it('should connect and insert with good credentials', function(done) {
-        verifyUserPassSuccess(opts.port, opts.username, opts.password, function (err) {
           if (err) return done(err);
           done();
         });
@@ -188,136 +74,35 @@ describe('Test Spawning MongoDB Deployments', function() {
     });
   });
 
- describe('Cluster', function() {
+  describe('Cluster', function() {
+    var opts = {
+      action: 'start',
+      name: 'mongodb-runner-test-cluster',
+      shardPort: 33000,
+      configPort: 33100,
+      port: 33200,
+      shards: 3,
+      topology: 'cluster'
+    };
 
-    describe('Simple', function() {
-
-      var opts = {
-        action: 'start',
-        name: 'mongodb-runner-test-cluster',
-        shardPort: 29000,
-        configPort: 29100,
-        shards: 3,
-        topology: 'cluster'
-      };
-
-      before(function(done) {
-        tmpobj = tmp.dirSync({unsafeCleanup:true});
-        debug("DB Dir: ", tmpobj.name);
-        opts.dbpath = tmpobj.name;
-        done();
-      });
-
-      it('should start a cluster', function(done) {
-        run(opts, function(err) {
-          if (err) return done(err);
-          opts.action = 'stop';
-          run(opts, function(err) {
-            if (err) return done(err);
-            done();
-          });
-        });
-      });
+    before(function(done) {
+      tmpobj = tmp.dirSync({ unsafeCleanup: true });
+      debug('DB Dir: ', tmpobj.name);
+      opts.dbpath = tmpobj.name;
+      done();
     });
 
-    describe('Username/Password Auth', function() {
-      var opts = {
-        action: 'start',
-        name: 'mongodb-runner-test-cluster-user-pass',
-        shardPort: 32000,
-        configPort: 32100,
-        port: 32200,
-        shards: 3,
-        auth_mechanism: "SCRAM_SHA_1",
-        username: 'adminUser',
-        password: 'adminPass',
-        topology: 'cluster'
-      };
-      var tmpDir = null;
-      var tmpKeyFile = null;
-
-      before(function(done) {
-        tmpDir = tmp.dirSync({unsafeCleanup:true});
-        opts.dbpath = tmpDir.name;
-        debug("DB Dir: ", tmpDir.name);
-
-        tmpKeyFile = tmp.fileSync();
-        fs.writeFileSync(tmpKeyFile.name, 'testkeyfiledata');
-        debug("KeyFile: ", tmpKeyFile.name);
-        opts.keyFile = tmpKeyFile.name;
-
-        run(opts, function(err) {
-          if (err) return done(err);
-          done();
-        });
-      });
-
-      after(function(done) {
+    it('should start a cluster', function(done) {
+      run(opts, function(err) {
+        if (err) return done(err);
         opts.action = 'stop';
         run(opts, function(err) {
-          if (err) return done(err);
-          //tmpDir.removeCallback();
-          //tmpKeyFile.removeCallback();
-          done();
-        });
-      });
-
-      it('should fail inserting with bad permissions', function(done) {
-        verifyNoUserPassFailure(opts.port, function (err) {
-          if (err) return done(err);
-          done();
-        });
-      });
-
-      it('should fail connecting with bad credentials', function(done) {
-        verifyBadUserPassFailure(opts.port, "foo", "bar", function (err) {
-          if (err) return done(err);
-          done();
-        });
-      });
-
-      it('should connect and insert with good credentials', function(done) {
-        verifyUserPassSuccess(opts.port, opts.username, opts.password, function (err) {
           if (err) return done(err);
           done();
         });
       });
     });
   });
-
-
 });
 
-var verifyNoUserPassFailure = function (port, callback){
-  debug("Verifying Auth");
-  mongodb.MongoClient.connect(format('mongodb://localhost:%s/test?authSource=admin', port),
-                              function(err, db) {
-    assert.ifError(err);
-    db.collection('fruit').insertOne({'variety':'apple'}, function(err){
-      assert(err, 'No error on insert with no authorization');
-      callback(null);
-    });
-  });
-};
 
-var verifyBadUserPassFailure = function (port, username, password, callback){
-  debug("Verifying Auth");
-  mongodb.MongoClient.connect(format('mongodb://%s:%s@localhost:%s/test?authSource=admin',
-                              username, password, port), function(err) {
-    assert(err,'No error on connect with bad credentials');
-    callback(null);
-  });
-};
-
-var verifyUserPassSuccess = function (port, username, password, callback){
-  debug("Verifying Auth");
-  var url = format('mongodb://%s:%s@localhost:%s/test?authSource=admin',
-                   username, password, port);
-  mongodb.MongoClient.connect(url, function(err, db) {
-    assert.ifError(err);
-    db.collection('fruit').insertOne({'variety':'apple'}, function(err, result){
-      assert.ifError(err);
-      callback(null);
-    });
-  });
-};
