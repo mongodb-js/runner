@@ -2,6 +2,18 @@
 
 var run = require('../');
 var kill = require('kill-mongodb');
+var assert = require('assert');
+var mongodb = require('mongodb');
+var debug = require('debug')('mongodb-runner:index.test');
+var format = require('util').format;
+var tmp = require('tmp');
+var fs = require('fs');
+var helper = require('./helper');
+var verifyUserPassSuccess = helper.verifyUserPassSuccess;
+var verifyWrongMechanismFailure = helper.verifyWrongMechanismFailure;
+var verifyNoUserPassFailure = helper.verifyNoUserPassFailure;
+var verifyBadUserPassFailure = helper.verifyBadUserPassFailure;
+var verifyWrongDBUserPassFailure = helper.verifyWrongDBUserPassFailure;
 
 describe('Test Spawning MongoDB Deployments', function() {
   before(function(done) {
@@ -14,6 +26,17 @@ describe('Test Spawning MongoDB Deployments', function() {
       name: 'mongodb-runner-test-standalone',
       port: 27000
     };
+    var tmpobj = null;
+
+    before(function(done) {
+      tmpobj = tmp.dirSync({
+        unsafeCleanup: true
+      });
+      debug('DB Dir: ', tmpobj.name);
+      opts.dbpath = tmpobj.name;
+      done();
+    });
+
 
     it('should start a standalone', function(done) {
       run(opts, function(err) {
@@ -39,6 +62,15 @@ describe('Test Spawning MongoDB Deployments', function() {
       topology: 'replicaset'
     };
 
+    before(function(done) {
+      tmpobj = tmp.dirSync({
+        unsafeCleanup: true
+      });
+      debug('DB Dir: ', tmpobj.name);
+      opts.dbpath = tmpobj.name;
+      done();
+    });
+
     it('should start a replicaset', function(done) {
       run(opts, function(err) {
         if (err) {
@@ -55,8 +87,7 @@ describe('Test Spawning MongoDB Deployments', function() {
     });
   });
 
-  // @todo (imlucas): Figure out why this is failing.
-  describe.skip('Cluster', function() {
+  describe('Cluster', function() {
     var opts = {
       action: 'start',
       name: 'mongodb-runner-test-cluster',
@@ -66,6 +97,15 @@ describe('Test Spawning MongoDB Deployments', function() {
       shards: 3,
       topology: 'cluster'
     };
+
+    before(function(done) {
+      tmpobj = tmp.dirSync({
+        unsafeCleanup: true
+      });
+      debug('DB Dir: ', tmpobj.name);
+      opts.dbpath = tmpobj.name;
+      done();
+    });
 
     it('should start a cluster', function(done) {
       run(opts, function(err) {
