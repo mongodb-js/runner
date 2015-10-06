@@ -23,7 +23,7 @@ var badCert = 'certs/expired_cert.pem';
 var selfSignCert = 'certs/selfsign_cert.pem';
 var crl = 'certs/crl.pem';
 
-describe.only('Test Spawning With SSL Enabled', function() {
+describe('Test Spawning With SSL Enabled', function() {
   before(function(done) {
     kill(done);
   });
@@ -91,7 +91,7 @@ describe.only('Test Spawning With SSL Enabled', function() {
     });
 
     it('should succeed with no ca and no validation', function(done) {
-      verifySSLSuccess(opts.port, opts.topology, ca, clientPasswordCert, clientPassword, false, function(err) {
+      verifySSLSuccess(opts.port, opts.topology, null, clientPasswordCert, clientPassword, false, function(err) {
         if (err) return done(err);
         done();
       });
@@ -202,7 +202,7 @@ describe.only('Test Spawning With SSL Enabled', function() {
     });
   });
 
- describe('Replicaset with Password, forcing cert validation on both ends', function() {
+  describe('Replicaset with Password, forcing cert validation on both ends', function() {
     var opts = {
       action: 'start',
       name: 'mongodb-runner-test-replicaset-ssl',
@@ -378,7 +378,7 @@ describe.only('Test Spawning With SSL Enabled', function() {
     });
   });
 
- describe('Cluster with Password, forcing cert validation on both ends', function() {
+  describe('Cluster with Password, forcing cert validation on both ends', function() {
     var opts = {
       action: 'start',
       name: 'mongodb-runner-test-cluster-ssl',

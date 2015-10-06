@@ -13,7 +13,7 @@ var verifyNoUserPassFailure = helper.verifyNoUserPassFailure;
 var verifyBadUserPassFailure = helper.verifyBadUserPassFailure;
 var verifyWrongDBUserPassFailure = helper.verifyWrongDBUserPassFailure;
 
-describe('Test Spawning With MONGODB-CR Enabled', function() {
+describe('Test Spawning With MONGODB Enabled', function() {
   before(function(done) {
     kill(done);
   });
@@ -21,12 +21,11 @@ describe('Test Spawning With MONGODB-CR Enabled', function() {
   describe('Standalone', function() {
     var opts = {
       action: 'start',
-      name: 'mongodb-runner-test-standalone-mongodb-cr',
+      name: 'mongodb-runner-test-standalone-mongodb',
       port: 29000,
-      auth_mechanism: 'MONGODB-CR',
+      auth_mechanism: 'MONGODB',
       username: 'adminUser',
-      password: 'adminPass',
-      version: '2.6'
+      password: 'adminPass'
     };
     var tmpobj = null;
 
@@ -71,7 +70,7 @@ describe('Test Spawning With MONGODB-CR Enabled', function() {
     });
 
     it('should fail to connect with wrong auth mechanism', function(done) {
-      verifyWrongMechanismFailure(opts.port, 'SCRAM-SHA-1', opts.username, opts.password, function(err) {
+      verifyWrongMechanismFailure(opts.port, 'PLAIN', opts.username, opts.password, function(err) {
         if (err) return done(err);
         done();
       });
@@ -81,13 +80,12 @@ describe('Test Spawning With MONGODB-CR Enabled', function() {
   describe('Replicaset', function() {
     var opts = {
       action: 'start',
-      name: 'mongodb-runner-test-replicaset-mongodb-cr',
+      name: 'mongodb-runner-test-replicaset-mongodb',
       port: 32000,
-      auth_mechanism: 'MONGODB-CR',
+      auth_mechanism: 'MONGODB',
       username: 'adminUser',
       password: 'adminPass',
-      topology: 'replicaset',
-      version: '2.6'
+      topology: 'replicaset'
     };
     var tmpDir = null;
     var tmpKeyFile = null;
@@ -146,7 +144,7 @@ describe('Test Spawning With MONGODB-CR Enabled', function() {
     });
 
     it('should fail to connect with wrong auth mechanism', function(done) {
-      verifyWrongMechanismFailure(opts.port, 'SCRAM-SHA-1', opts.username, opts.password, function(err) {
+      verifyWrongMechanismFailure(opts.port, 'PLAIN', opts.username, opts.password, function(err) {
         if (err) return done(err);
         done();
       });
@@ -156,16 +154,16 @@ describe('Test Spawning With MONGODB-CR Enabled', function() {
   describe('Cluster', function() {
     var opts = {
       action: 'start',
-      name: 'mongodb-runner-test-cluster-mongodb-cr',
+      name: 'mongodb-runner-test-cluster-mongodb',
       shardPort: 35000,
       configPort: 35100,
       port: 35200,
       shards: 3,
-      auth_mechanism: 'MONGODB-CR',
+      mongoses: 2,
+      auth_mechanism: 'MONGODB',
       username: 'adminUser',
       password: 'adminPass',
-      topology: 'cluster',
-      version: '2.6'
+      topology: 'cluster'
     };
     var tmpDir = null;
     var tmpKeyFile = null;
@@ -210,13 +208,6 @@ describe('Test Spawning With MONGODB-CR Enabled', function() {
       });
     });
 
-    it('should connect and insert with good credentials', function(done) {
-      verifyUserPassSuccess(opts.port, opts.auth_mechanism, opts.username, opts.password, function(err) {
-        if (err) return done(err);
-        done();
-      });
-    });
-
     it('should connect and insert with good credentials to all mongoses', function(done) {
       verifyUserPassSuccess(opts.port, opts.auth_mechanism, opts.username, opts.password, function(err) {
         if (err) return done(err);
@@ -228,7 +219,7 @@ describe('Test Spawning With MONGODB-CR Enabled', function() {
     });
 
     it('should fail to connect with wrong auth mechanism', function(done) {
-      verifyWrongMechanismFailure(opts.port, 'SCRAM-SHA-1', opts.username, opts.password, function(err) {
+      verifyWrongMechanismFailure(opts.port, 'PLAIN', opts.username, opts.password, function(err) {
         if (err) return done(err);
         done();
       });
