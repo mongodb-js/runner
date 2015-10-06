@@ -42,11 +42,11 @@ describe('Test Extra Users With Different Permissions', function() {
       action: 'start',
       name: 'mongodb-runner-test-standalone-extra-users',
       port: 36000,
-      auth_mechanism: 'SCRAM-SHA-1',
+      auth_mechanism: 'MONGODB',
       username: 'adminUser',
       password: 'adminPass',
       secondUser: user2,
-      thirdUser: user3
+      thirdUser: user3,
     };
     var tmpobj = null;
 
@@ -96,12 +96,12 @@ describe('Test Extra Users With Different Permissions', function() {
       action: 'start',
       name: 'mongodb-runner-test-replicaset-extra-users',
       port: 37000,
-      auth_mechanism: 'SCRAM-SHA-1',
+      auth_mechanism: 'MONGODB',
       username: 'adminUser',
       password: 'adminPass',
       topology: 'replicaset',
       secondUser: user2,
-      thirdUser: user3
+      thirdUser: user3,
     };
     var tmpobj = null;
 
@@ -157,13 +157,13 @@ describe('Test Extra Users With Different Permissions', function() {
     var opts = {
       action: 'start',
       name: 'mongodb-runner-test-cluster-extra-users',
-      port: 37000,
-      auth_mechanism: 'SCRAM-SHA-1',
+      port: 38000,
+      auth_mechanism: 'MONGODB',
       username: 'adminUser',
       password: 'adminPass',
       topology: 'cluster',
       secondUser: user2,
-      thirdUser: user3
+      thirdUser: user3,
     };
     var tmpobj = null;
 
