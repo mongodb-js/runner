@@ -16,7 +16,7 @@ var createSSLOptions = function(topology, sslCA, sslCert, sslKey,
     mongos: {}
   };
 
-  if (sslValidate) {
+  if (sslValidate !== null) {
     connectionOptions.server.sslValidate = sslValidate;
     if (topology === 'replicaset' || topology === 'cluster') connectionOptions.replSet.sslValidate = sslValidate;
     if (topology === 'cluster') connectionOptions.mongos.sslValidate = sslValidate;
@@ -65,9 +65,9 @@ var verifyBadUserPassFailure = function(port, authMechanism, username, password,
   });
 };
 
-var verifyWrongDBUserPassFailure = function(port, authMechanism, username, password, callback) {
-  var url = format('mongodb://%s:%s@localhost:%s/admin?authSource=admin',
-                      username, password, port);
+var verifyWrongDBUserPassFailure = function(port, authMechanism, authSource, dbName, username, password, callback) {
+  var url = format('mongodb://%s:%s@localhost:%s/%s?authSource=%s',
+                      username, password, port, dbName, authSource);
   mongodb.MongoClient.connect(url, function(err, db) {
     assert.ifError(err);
     db.collection('fruit').insertOne({ variety:'apple' }, function(err, result) {
@@ -77,9 +77,18 @@ var verifyWrongDBUserPassFailure = function(port, authMechanism, username, passw
   });
 };
 
-var verifyUserPassSuccess = function(port, authMechanism, username, password, callback) {
-  var url = format('mongodb://%s:%s@localhost:%s/test?authSource=admin',
-                   username, password, port);
+var verifyCannotConnectToDBUserPassFailure = function(port, authMechanism, authSource, dbName, username, password, callback) {
+  var url = format('mongodb://%s:%s@localhost:%s/%s?authSource=%s',
+                      username, password, port, dbName, authSource);
+  mongodb.MongoClient.connect(url, function(err, db) {
+    assert(err,'No error on connection to wrong db');
+    callback(null);
+  });
+};
+
+var verifyUserPassSuccess = function(port, authMechanism, authSource, dbName, username, password, callback) {
+  var url = format('mongodb://%s:%s@localhost:%s/%s?authSource=%s',
+                   username, password, port, dbName, authSource);
   mongodb.MongoClient.connect(url, function(err, db) {
     assert.ifError(err);
     db.collection('fruit').insertOne({ variety:'apple' }, function(err, result) {
@@ -131,6 +140,7 @@ module.exports = {
   verifyWrongDBUserPassFailure: verifyWrongDBUserPassFailure,
   verifyUserPassSuccess: verifyUserPassSuccess,
   verifyWrongMechanismFailure: verifyWrongMechanismFailure,
+  verifyCannotConnectToDBUserPassFailure: verifyCannotConnectToDBUserPassFailure,
   verifySSLSuccess: verifySSLSuccess,
   verifySSLFailure: verifySSLFailure
 };

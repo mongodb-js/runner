@@ -12,22 +12,25 @@ var verifyWrongMechanismFailure = helper.verifyWrongMechanismFailure;
 var verifyNoUserPassFailure = helper.verifyNoUserPassFailure;
 var verifyBadUserPassFailure = helper.verifyBadUserPassFailure;
 var verifyWrongDBUserPassFailure = helper.verifyWrongDBUserPassFailure;
+var verifyCannotConnectToDBUserPassFailure = helper.verifyCannotConnectToDBUserPassFailure;
+
 
 var user2 = {
   username: 'user2',
   password: 'pass2',
+  db: 'admin',
   roles: [
-     { role: 'readWriteAnyDatabase', db: 'admin' }
+     { role: 'read', db: 'fruit' },
+     { role: 'readWrite', db: 'test' }
   ]
 };
 
 var user3 = {
   username: 'user3',
   password: 'pass3',
+  db: 'test',
   roles: [
-     { role: 'read', db: 'reporting' },
-     { role: 'read', db: 'products' },
-     { role: 'read', db: 'sales' },
+     { role: 'read', db: 'fruit' },
      { role: 'readWrite', db: 'test' }
   ]
 }
@@ -70,21 +73,28 @@ describe('Test Extra Users With Different Permissions', function() {
     });
 
     it('should connect and insert with user2 credentials', function(done) {
-      verifyUserPassSuccess(opts.port, opts.auth_mechanism, opts.secondUser.username, opts.secondUser.password, function(err) {
+      verifyUserPassSuccess(opts.port, opts.auth_mechanism, 'admin', 'test', opts.secondUser.username, opts.secondUser.password, function(err) {
         if (err) return done(err);
         done();
       });
     });
 
-    it('should fail writing with user3 credentials', function(done) {
-      verifyWrongDBUserPassFailure(opts.port, opts.auth_mechanism, opts.thirdUser.username, opts.thirdUser.password, function(err) {
+    it('should fail writing with user2 credentials', function(done) {
+      verifyWrongDBUserPassFailure(opts.port, opts.auth_mechanism, 'admin', 'fruit', opts.secondUser.username, opts.secondUser.password, function(err) {
+        if (err) return done(err);
+        done();
+      });
+    });
+
+    it('should fail connecting to admin with user3 credentials', function(done) {
+      verifyCannotConnectToDBUserPassFailure(opts.port, opts.auth_mechanism, 'admin', 'admin', opts.thirdUser.username, opts.thirdUser.password, function(err) {
         if (err) return done(err);
         done();
       });
     });
 
     it('should connect and insert with user3 credentials', function(done) {
-      verifyUserPassSuccess(opts.port, opts.auth_mechanism, opts.thirdUser.username, opts.thirdUser.password, function(err) {
+      verifyUserPassSuccess(opts.port, opts.auth_mechanism, 'test', 'test', opts.thirdUser.username, opts.thirdUser.password, function(err) {
         if (err) return done(err);
         done();
       });
@@ -132,21 +142,28 @@ describe('Test Extra Users With Different Permissions', function() {
     });
 
     it('should connect and insert with user2 credentials', function(done) {
-      verifyUserPassSuccess(opts.port, opts.auth_mechanism, opts.secondUser.username, opts.secondUser.password, function(err) {
+      verifyUserPassSuccess(opts.port, opts.auth_mechanism, 'admin', 'test', opts.secondUser.username, opts.secondUser.password, function(err) {
         if (err) return done(err);
         done();
       });
     });
 
-    it('should fail writing with user3 credentials', function(done) {
-      verifyWrongDBUserPassFailure(opts.port, opts.auth_mechanism, opts.thirdUser.username, opts.thirdUser.password, function(err) {
+    it('should fail writing with user2 credentials', function(done) {
+      verifyWrongDBUserPassFailure(opts.port, opts.auth_mechanism, 'admin', 'fruit', opts.secondUser.username, opts.secondUser.password, function(err) {
+        if (err) return done(err);
+        done();
+      });
+    });
+
+    it('should fail connecting to admin with user3 credentials', function(done) {
+      verifyCannotConnectToDBUserPassFailure(opts.port, opts.auth_mechanism, 'admin', 'admin', opts.thirdUser.username, opts.thirdUser.password, function(err) {
         if (err) return done(err);
         done();
       });
     });
 
     it('should connect and insert with user3 credentials', function(done) {
-      verifyUserPassSuccess(opts.port, opts.auth_mechanism, opts.thirdUser.username, opts.thirdUser.password, function(err) {
+      verifyUserPassSuccess(opts.port, opts.auth_mechanism, 'test', 'test', opts.thirdUser.username, opts.thirdUser.password, function(err) {
         if (err) return done(err);
         done();
       });
@@ -194,21 +211,28 @@ describe('Test Extra Users With Different Permissions', function() {
     });
 
     it('should connect and insert with user2 credentials', function(done) {
-      verifyUserPassSuccess(opts.port, opts.auth_mechanism, opts.secondUser.username, opts.secondUser.password, function(err) {
+      verifyUserPassSuccess(opts.port, opts.auth_mechanism, 'admin', 'test', opts.secondUser.username, opts.secondUser.password, function(err) {
         if (err) return done(err);
         done();
       });
     });
 
-    it('should fail writing with user3 credentials', function(done) {
-      verifyWrongDBUserPassFailure(opts.port, opts.auth_mechanism, opts.thirdUser.username, opts.thirdUser.password, function(err) {
+    it('should fail writing with user2 credentials', function(done) {
+      verifyWrongDBUserPassFailure(opts.port, opts.auth_mechanism, 'admin', 'fruit', opts.secondUser.username, opts.secondUser.password, function(err) {
+        if (err) return done(err);
+        done();
+      });
+    });
+
+    it('should fail connecting to admin with user3 credentials', function(done) {
+      verifyCannotConnectToDBUserPassFailure(opts.port, opts.auth_mechanism, 'admin', 'admin', opts.thirdUser.username, opts.thirdUser.password, function(err) {
         if (err) return done(err);
         done();
       });
     });
 
     it('should connect and insert with user3 credentials', function(done) {
-      verifyUserPassSuccess(opts.port, opts.auth_mechanism, opts.thirdUser.username, opts.thirdUser.password, function(err) {
+      verifyUserPassSuccess(opts.port, opts.auth_mechanism, 'test', 'test', opts.thirdUser.username, opts.thirdUser.password, function(err) {
         if (err) return done(err);
         done();
       });

@@ -63,7 +63,7 @@ describe('Test Spawning With MONGODB Enabled', function() {
     });
 
     it('should connect and insert with good credentials', function(done) {
-      verifyUserPassSuccess(opts.port, opts.auth_mechanism, opts.username, opts.password, function(err) {
+      verifyUserPassSuccess(opts.port, opts.auth_mechanism, 'admin', 'admin', opts.username, opts.password, function(err) {
         if (err) return done(err);
         done();
       });
@@ -131,11 +131,11 @@ describe('Test Spawning With MONGODB Enabled', function() {
     });
 
     it('should connect and insert with good credentials to all members of a replicaset', function(done) {
-      verifyUserPassSuccess(opts.port, opts.auth_mechanism, opts.username, opts.password, function(err) {
+      verifyUserPassSuccess(opts.port, opts.auth_mechanism, 'admin', 'admin', opts.username, opts.password, function(err) {
         if (err) return done(err);
-        verifyUserPassSuccess(opts.port + 1, opts.auth_mechanism, opts.username, opts.password, function(err) {
+        verifyUserPassSuccess(opts.port + 1, opts.auth_mechanism, 'admin', 'admin', opts.username, opts.password, function(err) {
           if (err) return done(err);
-          verifyUserPassSuccess(opts.port + 2, opts.auth_mechanism, opts.username, opts.password, function(err) {
+          verifyUserPassSuccess(opts.port + 2, opts.auth_mechanism, 'admin', 'admin', opts.username, opts.password, function(err) {
             if (err) return done(err);
             done();
           });
@@ -209,9 +209,9 @@ describe('Test Spawning With MONGODB Enabled', function() {
     });
 
     it('should connect and insert with good credentials to all mongoses', function(done) {
-      verifyUserPassSuccess(opts.port, opts.auth_mechanism, opts.username, opts.password, function(err) {
+      verifyUserPassSuccess(opts.port, opts.auth_mechanism, 'admin', 'admin', opts.username, opts.password, function(err) {
         if (err) return done(err);
-        verifyUserPassSuccess(opts.port + 1, opts.auth_mechanism, opts.username, opts.password, function(err) {
+        verifyUserPassSuccess(opts.port + 1, opts.auth_mechanism, 'admin', 'admin', opts.username, opts.password, function(err) {
           if (err) return done(err);
           done();
         });
