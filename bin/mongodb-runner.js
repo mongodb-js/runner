@@ -29,7 +29,7 @@ if (args.version) {
 
 debug('running action `%s`', args.action);
 
-if (args.action === 'start') {
+if (args.action === 'start' && !process.env.CI){
   new clui.Spinner('Starting a MongoDB deployment to test against...').start();
 }
 run(args, function(err) {
