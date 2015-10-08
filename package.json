@@ -53,7 +53,7 @@
     "eslint-config-mongodb-js": "^0.1.6",
     "github-release": "~0.2.0",
     "gulp": "~3.9.0",
-    "istanbul": "^0.3.21",
+    "istanbul": "^0.3.22",
     "kill-mongodb": "0.0.1",
     "lone": "~0.4.2",
     "mocha": "~2.3.3",
