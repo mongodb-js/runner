@@ -43,8 +43,8 @@
     "mkdirp": "^0.5.1",
     "mongodb": "^2.0.45",
     "mongodb-dbpath": "0.0.1",
-    "mongodb-tools": "1.0.6",
-    "mongodb-version-manager": "0.8.0",
+    "mongodb-tools": "mongodb-js/mongodb-tools",
+    "mongodb-version-manager": "^0.8.5",
     "tmp": "0.0.28",
     "untildify": "~2.1.0"
   },
