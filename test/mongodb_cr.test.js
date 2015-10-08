@@ -13,7 +13,7 @@ var verifyNoUserPassFailure = helper.verifyNoUserPassFailure;
 var verifyBadUserPassFailure = helper.verifyBadUserPassFailure;
 var verifyWrongDBUserPassFailure = helper.verifyWrongDBUserPassFailure;
 
-describe('Test Spawning With MONGODB-CR Enabled', function() {
+describe.skip('Test Spawning With MONGODB-CR Enabled', function() {
   before(function(done) {
     kill(done);
   });
@@ -31,7 +31,9 @@ describe('Test Spawning With MONGODB-CR Enabled', function() {
     var tmpobj = null;
 
     before(function(done) {
-      tmpobj = tmp.dirSync({ unsafeCleanup: true });
+      tmpobj = tmp.dirSync({
+        unsafeCleanup: true
+      });
       debug('DB Dir: ', tmpobj.name);
       opts.dbpath = tmpobj.name;
       run(opts, function(err) {
@@ -93,7 +95,9 @@ describe('Test Spawning With MONGODB-CR Enabled', function() {
     var tmpKeyFile = null;
 
     before(function(done) {
-      tmpDir = tmp.dirSync({ unsafeCleanup: true });
+      tmpDir = tmp.dirSync({
+        unsafeCleanup: true
+      });
       opts.dbpath = tmpDir.name;
       debug('DB Dir: ', tmpDir.name);
 
@@ -112,8 +116,8 @@ describe('Test Spawning With MONGODB-CR Enabled', function() {
       opts.action = 'stop';
       run(opts, function(err) {
         if (err) return done(err);
-        //tmpDir.removeCallback();
-        //tmpKeyFile.removeCallback();
+        // tmpDir.removeCallback();
+        // tmpKeyFile.removeCallback();
         done();
       });
     });
@@ -171,7 +175,9 @@ describe('Test Spawning With MONGODB-CR Enabled', function() {
     var tmpKeyFile = null;
 
     before(function(done) {
-      tmpDir = tmp.dirSync({ unsafeCleanup: true });
+      tmpDir = tmp.dirSync({
+        unsafeCleanup: true
+      });
       opts.dbpath = tmpDir.name;
       debug('DB Dir: ', tmpDir.name);
 
@@ -190,8 +196,8 @@ describe('Test Spawning With MONGODB-CR Enabled', function() {
       opts.action = 'stop';
       run(opts, function(err) {
         if (err) return done(err);
-        //tmpDir.removeCallback();
-        //tmpKeyFile.removeCallback();
+        // tmpDir.removeCallback();
+        // tmpKeyFile.removeCallback();
         done();
       });
     });
