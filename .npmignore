@@ -5,3 +5,4 @@ test/
 .lone
 gulpfile.js
 coverage/
+.mongodb/
