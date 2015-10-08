@@ -16,5 +16,5 @@ notifications:
   flowdock: e3dc17bc8a2c1b3412abe3e5747f8291
 after_script: "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
 env:
-  - DEBUG=* MONGODB_VERSION=2.6.x
-  - DEBUG=* MONGODB_VERSION=3.0.x
+  - DEBUG=mon* MONGODB_VERSION=2.6.x
+  - DEBUG=mon* MONGODB_VERSION=3.0.x
