@@ -3,6 +3,7 @@ var run = require('../');
 var kill = require('kill-mongodb');
 var debug = require('debug')('mongodb-runner:extra_users.test');
 var fs = require('fs');
+var tmp = require('tmp');
 var helper = require('./helper');
 var verifyUserPassSuccess = helper.verifyUserPassSuccess;
 var verifyWrongDBUserPassFailure = helper.verifyWrongDBUserPassFailure;

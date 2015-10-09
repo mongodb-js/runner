@@ -2,7 +2,6 @@
 
 var run = require('../');
 var kill = require('kill-mongodb');
-var debug = require('debug')('mongodb-runner:index.test');
 
 describe('Test Spawning MongoDB Deployments', function() {
   before(function(done) {
