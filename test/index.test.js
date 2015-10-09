@@ -1,18 +1,9 @@
+/* eslint no-sync:0 */
+
 var run = require('../');
 var kill = require('kill-mongodb');
-var assert = require('assert');
-var mongodb = require('mongodb');
 var debug = require('debug')('mongodb-runner:index.test');
-var format = require('util').format;
 var tmp = require('tmp');
-var fs = require('fs');
-var helper = require('./helper');
-var verifyUserPassSuccess = helper.verifyUserPassSuccess;
-var verifyWrongMechanismFailure = helper.verifyWrongMechanismFailure;
-var verifyNoUserPassFailure = helper.verifyNoUserPassFailure;
-var verifyBadUserPassFailure = helper.verifyBadUserPassFailure;
-var verifyWrongDBUserPassFailure = helper.verifyWrongDBUserPassFailure;
-
 
 describe('Test Spawning MongoDB Deployments', function() {
   before(function(done) {
@@ -28,7 +19,9 @@ describe('Test Spawning MongoDB Deployments', function() {
     var tmpobj = null;
 
     before(function(done) {
-      tmpobj = tmp.dirSync({ unsafeCleanup: true });
+      tmpobj = tmp.dirSync({
+        unsafeCleanup: true
+      });
       debug('DB Dir: ', tmpobj.name);
       opts.dbpath = tmpobj.name;
       done();
@@ -37,10 +30,14 @@ describe('Test Spawning MongoDB Deployments', function() {
 
     it('should start a standalone', function(done) {
       run(opts, function(err) {
-        if (err) return done(err);
+        if (err) {
+          return done(err);
+        }
         opts.action = 'stop';
         run(opts, function(err) {
-          if (err) return done(err);
+          if (err) {
+            return done(err);
+          }
           done();
         });
       });
@@ -56,7 +53,9 @@ describe('Test Spawning MongoDB Deployments', function() {
     };
 
     before(function(done) {
-      tmpobj = tmp.dirSync({ unsafeCleanup: true });
+      var tmpobj = tmp.dirSync({
+        unsafeCleanup: true
+      });
       debug('DB Dir: ', tmpobj.name);
       opts.dbpath = tmpobj.name;
       done();
@@ -64,10 +63,14 @@ describe('Test Spawning MongoDB Deployments', function() {
 
     it('should start a replicaset', function(done) {
       run(opts, function(err) {
-        if (err) return done(err);
+        if (err) {
+          return done(err);
+        }
         opts.action = 'stop';
         run(opts, function(err) {
-          if (err) return done(err);
+          if (err) {
+            return done(err);
+          }
           done();
         });
       });
@@ -86,7 +89,9 @@ describe('Test Spawning MongoDB Deployments', function() {
     };
 
     before(function(done) {
-      tmpobj = tmp.dirSync({ unsafeCleanup: true });
+      var tmpobj = tmp.dirSync({
+        unsafeCleanup: true
+      });
       debug('DB Dir: ', tmpobj.name);
       opts.dbpath = tmpobj.name;
       done();
@@ -94,15 +99,17 @@ describe('Test Spawning MongoDB Deployments', function() {
 
     it('should start a cluster', function(done) {
       run(opts, function(err) {
-        if (err) return done(err);
+        if (err) {
+          return done(err);
+        }
         opts.action = 'stop';
         run(opts, function(err) {
-          if (err) return done(err);
+          if (err) {
+            return done(err);
+          }
           done();
         });
       });
     });
   });
 });
-
-
