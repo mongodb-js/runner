@@ -42,7 +42,7 @@ var user3 = {
   ]
 };
 
-describe('Test Extra Users With Different Permissions', function() {
+describe.skip('Test Extra Users With Different Permissions', function() {
   before(function(done) {
     kill(done);
   });

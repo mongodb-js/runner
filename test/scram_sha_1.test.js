@@ -11,7 +11,7 @@ var verifyWrongMechanismFailure = helper.verifyWrongMechanismFailure;
 var verifyNoUserPassFailure = helper.verifyNoUserPassFailure;
 var verifyBadUserPassFailure = helper.verifyBadUserPassFailure;
 
-describe('Test Spawning With SCRAM-SHA-1 Enabled', function() {
+describe.skip('Test Spawning With SCRAM-SHA-1 Enabled', function() {
   before(function(done) {
     kill(done);
   });
