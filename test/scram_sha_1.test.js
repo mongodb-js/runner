@@ -20,7 +20,7 @@ describe.skip('Test Spawning With SCRAM-SHA-1 Enabled', function() {
     var opts = {
       action: 'start',
       name: 'mongodb-runner-test-standalone-scram-sha-1',
-      port: 28000,
+      port: 27017,
       auth_mechanism: 'SCRAM-SHA-1',
       username: 'adminUser',
       password: 'adminPass'
