@@ -3,7 +3,6 @@
 var run = require('../');
 var kill = require('kill-mongodb');
 var debug = require('debug')('mongodb-runner:index.test');
-var tmp = require('tmp');
 
 describe('Test Spawning MongoDB Deployments', function() {
   before(function(done) {
@@ -16,17 +15,6 @@ describe('Test Spawning MongoDB Deployments', function() {
       name: 'mongodb-runner-test-standalone',
       port: 27000
     };
-    var tmpobj = null;
-
-    before(function(done) {
-      tmpobj = tmp.dirSync({
-        unsafeCleanup: true
-      });
-      debug('DB Dir: ', tmpobj.name);
-      opts.dbpath = tmpobj.name;
-      done();
-    });
-
 
     it('should start a standalone', function(done) {
       run(opts, function(err) {
@@ -51,15 +39,6 @@ describe('Test Spawning MongoDB Deployments', function() {
       port: 30000,
       topology: 'replicaset'
     };
-
-    before(function(done) {
-      var tmpobj = tmp.dirSync({
-        unsafeCleanup: true
-      });
-      debug('DB Dir: ', tmpobj.name);
-      opts.dbpath = tmpobj.name;
-      done();
-    });
 
     it('should start a replicaset', function(done) {
       run(opts, function(err) {
@@ -87,15 +66,6 @@ describe('Test Spawning MongoDB Deployments', function() {
       shards: 3,
       topology: 'cluster'
     };
-
-    before(function(done) {
-      var tmpobj = tmp.dirSync({
-        unsafeCleanup: true
-      });
-      debug('DB Dir: ', tmpobj.name);
-      opts.dbpath = tmpobj.name;
-      done();
-    });
 
     it('should start a cluster', function(done) {
       run(opts, function(err) {

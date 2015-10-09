@@ -28,11 +28,6 @@ describe('Test Spawning With SCRAM-SHA-1 Enabled', function() {
     var tmpobj = null;
 
     before(function(done) {
-      tmpobj = tmp.dirSync({
-        unsafeCleanup: true
-      });
-      debug('DB Dir: ', tmpobj.name);
-      opts.dbpath = tmpobj.name;
       run(opts, function(err) {
         if (err) {
           return done(err);
@@ -101,16 +96,9 @@ describe('Test Spawning With SCRAM-SHA-1 Enabled', function() {
       password: 'adminPass',
       topology: 'replicaset'
     };
-    var tmpDir = null;
     var tmpKeyFile = null;
 
     before(function(done) {
-      tmpDir = tmp.dirSync({
-        unsafeCleanup: true
-      });
-      opts.dbpath = tmpDir.name;
-      debug('DB Dir: ', tmpDir.name);
-
       tmpKeyFile = tmp.fileSync();
       fs.writeFileSync(tmpKeyFile.name, 'testkeyfiledata');
       debug('KeyFile: ', tmpKeyFile.name);
@@ -200,16 +188,9 @@ describe('Test Spawning With SCRAM-SHA-1 Enabled', function() {
       password: 'adminPass',
       topology: 'cluster'
     };
-    var tmpDir = null;
     var tmpKeyFile = null;
 
     before(function(done) {
-      tmpDir = tmp.dirSync({
-        unsafeCleanup: true
-      });
-      opts.dbpath = tmpDir.name;
-      debug('DB Dir: ', tmpDir.name);
-
       tmpKeyFile = tmp.fileSync();
       fs.writeFileSync(tmpKeyFile.name, 'testkeyfiledata');
       debug('KeyFile: ', tmpKeyFile.name);

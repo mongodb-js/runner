@@ -25,11 +25,6 @@
       "coverage/{*,**/*}"
     ]
   },
-  "dependency-check": {
-    "ignore": [
-      "tmp"
-    ]
-  },
   "precommit": [
     "check"
   ],
@@ -46,10 +41,9 @@
     "minimist": "^1.2.0",
     "mkdirp": "^0.5.1",
     "mongodb": "^2.0.45",
-    "mongodb-dbpath": "0.0.1",
+    "mongodb-dbpath": "^0.0.1",
     "mongodb-tools": "mongodb-js/mongodb-tools",
-    "mongodb-version-manager": "^0.8.5",
-    "tmp": "0.0.28",
+    "mongodb-version-manager": "^0.8.6",
     "untildify": "~2.1.0"
   },
   "devDependencies": {
@@ -63,6 +57,7 @@
     "mocha": "~2.3.3",
     "mongodb-js-fmt": "0.0.3",
     "mongodb-js-precommit": "^0.2.2",
-    "pre-commit": "^1.1.1"
+    "pre-commit": "^1.1.1",
+    "tmp": "0.0.28"
   }
 }

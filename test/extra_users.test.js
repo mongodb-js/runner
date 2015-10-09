@@ -2,7 +2,6 @@
 var run = require('../');
 var kill = require('kill-mongodb');
 var debug = require('debug')('mongodb-runner:extra_users.test');
-var tmp = require('tmp');
 var fs = require('fs');
 var helper = require('./helper');
 var verifyUserPassSuccess = helper.verifyUserPassSuccess;
@@ -202,15 +201,8 @@ describe('Test Extra Users With Different Permissions', function() {
       secondUser: user2,
       thirdUser: user3
     };
-    var tmpobj = null;
 
     before(function(done) {
-      tmpobj = tmp.dirSync({
-        unsafeCleanup: true
-      });
-      debug('DB Dir: ', tmpobj.name);
-      opts.dbpath = tmpobj.name;
-
       var tmpKeyFile = tmp.fileSync();
       fs.writeFileSync(tmpKeyFile.name, 'testkeyfiledata');
       debug('KeyFile: ', tmpKeyFile.name);

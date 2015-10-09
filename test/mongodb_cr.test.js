@@ -25,31 +25,13 @@ describe.skip('Test Spawning With MONGODB-CR Enabled', function() {
       password: 'adminPass',
       version: '2.6'
     };
-    var tmpobj = null;
-
     before(function(done) {
-      tmpobj = tmp.dirSync({
-        unsafeCleanup: true
-      });
-      debug('DB Dir: ', tmpobj.name);
-      opts.dbpath = tmpobj.name;
-      run(opts, function(err) {
-        if (err) {
-          return done(err);
-        }
-        done();
-      });
+      run(opts, done);
     });
 
     after(function(done) {
       opts.action = 'stop';
-      run(opts, function(err) {
-        if (err) {
-          return done(err);
-        }
-        tmpobj.removeCallback();
-        done();
-      });
+      run(opts, done);
     });
 
     it('should fail inserting with bad permissions', function(done) {
@@ -102,16 +84,9 @@ describe.skip('Test Spawning With MONGODB-CR Enabled', function() {
       topology: 'replicaset',
       version: '2.6'
     };
-    var tmpDir = null;
     var tmpKeyFile = null;
 
     before(function(done) {
-      tmpDir = tmp.dirSync({
-        unsafeCleanup: true
-      });
-      opts.dbpath = tmpDir.name;
-      debug('DB Dir: ', tmpDir.name);
-
       tmpKeyFile = tmp.fileSync();
       fs.writeFileSync(tmpKeyFile.name, 'testkeyfiledata');
       debug('KeyFile: ', tmpKeyFile.name);
@@ -203,16 +178,9 @@ describe.skip('Test Spawning With MONGODB-CR Enabled', function() {
       topology: 'cluster',
       version: '2.6'
     };
-    var tmpDir = null;
     var tmpKeyFile = null;
 
     before(function(done) {
-      tmpDir = tmp.dirSync({
-        unsafeCleanup: true
-      });
-      opts.dbpath = tmpDir.name;
-      debug('DB Dir: ', tmpDir.name);
-
       tmpKeyFile = tmp.fileSync();
       fs.writeFileSync(tmpKeyFile.name, 'testkeyfiledata');
       debug('KeyFile: ', tmpKeyFile.name);
