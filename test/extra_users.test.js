@@ -9,7 +9,6 @@ var verifyUserPassSuccess = helper.verifyUserPassSuccess;
 var verifyWrongDBUserPassFailure = helper.verifyWrongDBUserPassFailure;
 var verifyCannotConnectToDBUserPassFailure = helper.verifyCannotConnectToDBUserPassFailure;
 
-
 var user2 = {
   username: 'user2',
   password: 'pass2',
