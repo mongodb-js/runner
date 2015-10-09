@@ -1,9 +1,6 @@
 var run = require('../');
 var kill = require('kill-mongodb');
-var assert = require('assert');
-var mongodb = require('mongodb');
 var debug = require('debug')('mongodb-runner:mongodb_cr.test');
-var format = require('util').format;
 var tmp = require('tmp');
 var fs = require('fs');
 var helper = require('./helper');
@@ -11,7 +8,6 @@ var verifyUserPassSuccess = helper.verifyUserPassSuccess;
 var verifyWrongMechanismFailure = helper.verifyWrongMechanismFailure;
 var verifyNoUserPassFailure = helper.verifyNoUserPassFailure;
 var verifyBadUserPassFailure = helper.verifyBadUserPassFailure;
-var verifyWrongDBUserPassFailure = helper.verifyWrongDBUserPassFailure;
 
 describe('Test Spawning With MONGODB Enabled', function() {
   before(function(done) {
@@ -130,8 +126,6 @@ describe('Test Spawning With MONGODB Enabled', function() {
         if (err) {
           return done(err);
         }
-        //tmpDir.removeCallback();
-        //tmpKeyFile.removeCallback();
         done();
       });
     });
@@ -226,8 +220,6 @@ describe('Test Spawning With MONGODB Enabled', function() {
         if (err) {
           return done(err);
         }
-        //tmpDir.removeCallback();
-        //tmpKeyFile.removeCallback();
         done();
       });
     });

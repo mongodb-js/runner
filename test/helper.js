@@ -103,7 +103,7 @@ var verifyWrongDBUserPassFailure = function(port, authMechanism, authSource, dbN
 var verifyCannotConnectToDBUserPassFailure = function(port, authMechanism, authSource, dbName, username, password, callback) {
   var url = format('mongodb://%s:%s@localhost:%s/%s?authSource=%s',
     username, password, port, dbName, authSource);
-  mongodb.MongoClient.connect(url, function(err, db) {
+  mongodb.MongoClient.connect(url, function(err) {
     assert(err, 'No error on connection to wrong db');
     callback(null);
   });
@@ -142,7 +142,7 @@ var verifySSLSuccess = function(port, topology, sslCAFile, sslPEMKeyFile,
     assert.ifError(err);
     db.collection('fruit').insertOne({
       variety: 'apple'
-    }, function(err, result) {
+    }, function(err) {
       assert.ifError(err);
       callback(null);
     });
@@ -155,7 +155,7 @@ var verifySSLFailure = function(port, topology, sslCAFile, sslPEMKeyFile,
   var connectionOptions = createSSLOptions(topology, sslCAFile, sslPEMKeyFile,
     sslPEMKeyFile, PEMKeyPassword, sslValidate);
 
-  mongodb.MongoClient.connect(url, connectionOptions, function(err, db) {
+  mongodb.MongoClient.connect(url, connectionOptions, function(err) {
     assert(err, 'No error on connect with wrong ssl parameters.');
     callback(null);
   });

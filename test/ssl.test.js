@@ -1,11 +1,7 @@
 var run = require('../');
 var kill = require('kill-mongodb');
-var assert = require('assert');
-var mongodb = require('mongodb');
 var debug = require('debug')('mongodb-runner:scram_sha_1.test');
-var format = require('util').format;
 var tmp = require('tmp');
-var fs = require('fs');
 var helper = require('./helper');
 var verifySSLSuccess = helper.verifySSLSuccess;
 var verifySSLFailure = helper.verifySSLFailure;
@@ -20,8 +16,6 @@ var brokenCa = 'certs/broken_ca.pem';
 var clientCert = 'certs/client.pem';
 var serverCert = 'certs/server.pem';
 var badCert = 'certs/expired_cert.pem';
-var selfSignCert = 'certs/selfsign_cert.pem';
-var crl = 'certs/crl.pem';
 
 describe('Test Spawning With SSL Enabled', function() {
   before(function(done) {
@@ -63,7 +57,6 @@ describe('Test Spawning With SSL Enabled', function() {
         if (err) {
           return done(err);
         }
-        //tmpobj.removeCallback();
         done();
       });
     });
@@ -149,7 +142,7 @@ describe('Test Spawning With SSL Enabled', function() {
       sslAllowConnectionsWithoutCertificates: true,
       sslPEMKeyFile: serverCert,
       sslValidate: true,
-      sslCAFile: ca,
+      sslCAFile: ca
     };
     var tmpobj = null;
 
@@ -173,7 +166,6 @@ describe('Test Spawning With SSL Enabled', function() {
         if (err) {
           return done(err);
         }
-        //tmpobj.removeCallback();
         done();
       });
     });
@@ -276,7 +268,6 @@ describe('Test Spawning With SSL Enabled', function() {
         if (err) {
           return done(err);
         }
-        //tmpobj.removeCallback();
         done();
       });
     });
@@ -363,7 +354,7 @@ describe('Test Spawning With SSL Enabled', function() {
       sslAllowConnectionsWithoutCertificates: true,
       sslPEMKeyFile: serverCert,
       sslValidate: true,
-      sslCAFile: ca,
+      sslCAFile: ca
     };
     var tmpobj = null;
 
@@ -387,7 +378,6 @@ describe('Test Spawning With SSL Enabled', function() {
         if (err) {
           return done(err);
         }
-        //tmpobj.removeCallback();
         done();
       });
     });
@@ -494,7 +484,6 @@ describe('Test Spawning With SSL Enabled', function() {
         if (err) {
           return done(err);
         }
-        //tmpobj.removeCallback();
         done();
       });
     });
@@ -585,7 +574,7 @@ describe('Test Spawning With SSL Enabled', function() {
       sslAllowConnectionsWithoutCertificates: true,
       sslPEMKeyFile: serverCert,
       sslValidate: true,
-      sslCAFile: ca,
+      sslCAFile: ca
     };
     var tmpobj = null;
 
@@ -609,7 +598,6 @@ describe('Test Spawning With SSL Enabled', function() {
         if (err) {
           return done(err);
         }
-        //tmpobj.removeCallback();
         done();
       });
     });

@@ -1,17 +1,11 @@
 /* eslint no-sync:0 */
 var run = require('../');
 var kill = require('kill-mongodb');
-var assert = require('assert');
-var mongodb = require('mongodb');
 var debug = require('debug')('mongodb-runner:extra_users.test');
-var format = require('util').format;
 var tmp = require('tmp');
 var fs = require('fs');
 var helper = require('./helper');
 var verifyUserPassSuccess = helper.verifyUserPassSuccess;
-var verifyWrongMechanismFailure = helper.verifyWrongMechanismFailure;
-var verifyNoUserPassFailure = helper.verifyNoUserPassFailure;
-var verifyBadUserPassFailure = helper.verifyBadUserPassFailure;
 var verifyWrongDBUserPassFailure = helper.verifyWrongDBUserPassFailure;
 var verifyCannotConnectToDBUserPassFailure = helper.verifyCannotConnectToDBUserPassFailure;
 
@@ -62,12 +56,11 @@ describe('Test Extra Users With Different Permissions', function() {
       username: 'adminUser',
       password: 'adminPass',
       secondUser: user2,
-      thirdUser: user3,
+      thirdUser: user3
     };
-    var tmpobj = null;
 
     before(function(done) {
-      tmpobj = tmp.dirSync({
+      var tmpobj = tmp.dirSync({
         unsafeCleanup: true
       });
       debug('DB Dir: ', tmpobj.name);
@@ -86,7 +79,6 @@ describe('Test Extra Users With Different Permissions', function() {
         if (err) {
           return done(err);
         }
-        //tmpobj.removeCallback();
         done();
       });
     });
@@ -138,12 +130,11 @@ describe('Test Extra Users With Different Permissions', function() {
       password: 'adminPass',
       topology: 'replicaset',
       secondUser: user2,
-      thirdUser: user3,
+      thirdUser: user3
     };
-    var tmpobj = null;
 
     before(function(done) {
-      tmpobj = tmp.dirSync({
+      var tmpobj = tmp.dirSync({
         unsafeCleanup: true
       });
       debug('DB Dir: ', tmpobj.name);
@@ -221,16 +212,15 @@ describe('Test Extra Users With Different Permissions', function() {
       secondUser: user2,
       thirdUser: user3
     };
-    var tmpobj = null;
 
     before(function(done) {
-      tmpobj = tmp.dirSync({
+      var tmpobj = tmp.dirSync({
         unsafeCleanup: true
       });
       debug('DB Dir: ', tmpobj.name);
       opts.dbpath = tmpobj.name;
 
-      tmpKeyFile = tmp.fileSync();
+      var tmpKeyFile = tmp.fileSync();
       fs.writeFileSync(tmpKeyFile.name, 'testkeyfiledata');
       debug('KeyFile: ', tmpKeyFile.name);
       opts.keyFile = tmpKeyFile.name;
