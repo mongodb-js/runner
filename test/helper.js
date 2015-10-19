@@ -10,8 +10,8 @@ var verifyNoUserPassFailure = function(port, authMechanism, callback) {
     assert.ifError(err);
     db.collection('fruit').insertOne({
       variety: 'apple'
-    }, function(err) {
-      assert(err, 'No error on insert with no authorization');
+    }, function(err2) {
+      assert(err2, 'No error on insert with no authorization');
       callback(null);
     });
   });
@@ -33,8 +33,8 @@ var verifyWrongDBUserPassFailure = function(port, authMechanism, username, passw
     assert.ifError(err);
     db.collection('fruit').insertOne({
       variety: 'apple'
-    }, function(err) {
-      assert(err, 'No error on insert with bad credentials for collection');
+    }, function(err2) {
+      assert(err2, 'No error on insert with bad credentials for collection');
       callback(null);
     });
   });
@@ -47,8 +47,8 @@ var verifyUserPassSuccess = function(port, authMechanism, username, password, ca
     assert.ifError(err);
     db.collection('fruit').insertOne({
       variety: 'apple'
-    }, function(err) {
-      assert.ifError(err);
+    }, function(err2) {
+      assert.ifError(err2);
       callback(null);
     });
   });

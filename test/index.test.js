@@ -12,7 +12,7 @@ describe('Test Spawning MongoDB Deployments', function() {
     var opts = {
       action: 'start',
       name: 'mongodb-runner-test-standalone',
-      port: 27000
+      port: 20000
     };
 
     it('should start a standalone', function(done) {
@@ -21,9 +21,9 @@ describe('Test Spawning MongoDB Deployments', function() {
           return done(err);
         }
         opts.action = 'stop';
-        run(opts, function(err) {
-          if (err) {
-            return done(err);
+        run(opts, function(err2) {
+          if (err2) {
+            return done(err2);
           }
           done();
         });
@@ -45,9 +45,9 @@ describe('Test Spawning MongoDB Deployments', function() {
           return done(err);
         }
         opts.action = 'stop';
-        run(opts, function(err) {
-          if (err) {
-            return done(err);
+        run(opts, function(err2) {
+          if (err2) {
+            return done(err2);
           }
           done();
         });
@@ -73,9 +73,9 @@ describe('Test Spawning MongoDB Deployments', function() {
           return done(err);
         }
         opts.action = 'stop';
-        run(opts, function(err) {
-          if (err) {
-            return done(err);
+        run(opts, function(err2) {
+          if (err2) {
+            return done(err2);
           }
           done();
         });

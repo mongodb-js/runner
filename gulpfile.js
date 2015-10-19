@@ -8,7 +8,9 @@ gulp.task('dist', ['upload']);
 
 gulp.task('build', function(cb) {
   exec('./node_modules/.bin/lone', function(err) {
-    if (err) return cb(err);
+    if (err) {
+      return cb(err);
+    }
     cb();
   });
 });
@@ -19,9 +21,12 @@ gulp.task('upload', ['build'], function() {
 
 
 gulp.task('keyfile', function(done) {
+  /* eslint no-console:0 no-shadow:0 */
   var key = path.resolve('./keys/mongodb-keyfile');
   exec('openssl rand -base64 741 > ' + key, function(err) {
-    if (err) return done(err);
+    if (err) {
+      return done(err);
+    }
     exec('chmod 600 ' + key, function(err) {
       if (err) return done(err);
 
@@ -37,17 +42,17 @@ gulp.task('pem', function(done) {
   var pem = path.resolve('./keys/mongodb.pem');
 
   exec('openssl req -new -x509 -days 365 -nodes'
-    + ' -out ' + out + ' -keyout ' + keyout
-    + ' -subj "/C=US/ST=NY/L=NYC/CN=www.mongodb.com"', function(err) {
+       + ' -out ' + out + ' -keyout ' + keyout
+       + ' -subj "/C=US/ST=NY/L=NYC/CN=www.mongodb.com"', function(err) {
+    if (err) return done(err);
+
+    exec('cat ' + out + ' ' + keyout + ' > ' + pem, function(err) {
       if (err) return done(err);
+      console.log('- ' + out);
+      console.log('- ' + keyout);
+      console.log('- ' + pem);
 
-      exec('cat ' + out + ' ' + keyout + ' > ' + pem, function(err) {
-        if (err) return done(err);
-        console.log('- ' + out);
-        console.log('- ' + keyout);
-        console.log('- ' + pem);
-
-        done();
-      });
+      done();
     });
+  });
 });
