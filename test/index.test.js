@@ -12,7 +12,7 @@ describe('Test Spawning MongoDB Deployments', function() {
     var opts = {
       action: 'start',
       name: 'mongodb-runner-test-standalone',
-      port: 27000
+      port: 20000
     };
 
     it('should start a standalone', function(done) {
