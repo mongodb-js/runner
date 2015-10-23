@@ -4,7 +4,7 @@
   "author": "Lucas Hrabovsky <hrabovsky.lucas@gmail.com> (http://imlucas.com)",
   "description": "Starts all of the deployment types for testing",
   "scripts": {
-    "fmt": "mongodb-js-fmt index.js bin/*.js lib/*.js test/*.js",
+    "fmt": "mongodb-js-fmt ./*.js bin/*.js lib/*.js test/*.js",
     "check": "mongodb-js-precommit",
     "test": "mocha",
     "ci": "./node_modules/istanbul/lib/cli.js cover _mocha -- -R spec ./test/*.test.js"

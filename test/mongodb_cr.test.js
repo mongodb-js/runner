@@ -130,23 +130,23 @@ describe.skip('Test Spawning With MONGODB-CR Enabled', function() {
 
     it('should connect and insert with good credentials to all '
       + 'members of a replicaset', function(done) {
-      verifyUserPassSuccess(opts.port, opts.auth_mechanism, opts.username, opts.password, function(err) {
-        if (err) {
-          return done(err);
-        }
-        verifyUserPassSuccess(opts.port + 1, opts.auth_mechanism, opts.username, opts.password, function(err2) {
-          if (err2) {
-            return done(err2);
+        verifyUserPassSuccess(opts.port, opts.auth_mechanism, opts.username, opts.password, function(err) {
+          if (err) {
+            return done(err);
           }
-          verifyUserPassSuccess(opts.port + 2, opts.auth_mechanism, opts.username, opts.password, function(err3) {
-            if (err3) {
-              return done(err3);
+          verifyUserPassSuccess(opts.port + 1, opts.auth_mechanism, opts.username, opts.password, function(err2) {
+            if (err2) {
+              return done(err2);
             }
-            done();
+            verifyUserPassSuccess(opts.port + 2, opts.auth_mechanism, opts.username, opts.password, function(err3) {
+              if (err3) {
+                return done(err3);
+              }
+              done();
+            });
           });
         });
       });
-    });
 
     it('should fail to connect with wrong auth mechanism', function(done) {
       verifyWrongMechanismFailure(opts.port, 'SCRAM-SHA-1', opts.username, opts.password, function(err) {

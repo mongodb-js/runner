@@ -86,32 +86,32 @@ describe.skip('Test Extra Users With Different Permissions', function() {
 
     it('should connect and insert with user2 credentials', function(done) {
       verifyUserPassSuccess(opts.port, opts.auth_mechanism, opts.secondUser.username,
-                            opts.secondUser.password, function(err) {
-        if (err) {
-          return done(err);
-        }
-        done();
-      });
+        opts.secondUser.password, function(err) {
+          if (err) {
+            return done(err);
+          }
+          done();
+        });
     });
 
     it('should fail writing with user3 credentials', function(done) {
       verifyWrongDBUserPassFailure(opts.port, opts.auth_mechanism, opts.thirdUser.username,
-                                   opts.thirdUser.password, function(err) {
-        if (err) {
-          return done(err);
-        }
-        done();
-      });
+        opts.thirdUser.password, function(err) {
+          if (err) {
+            return done(err);
+          }
+          done();
+        });
     });
 
     it('should connect and insert with user3 credentials', function(done) {
       verifyUserPassSuccess(opts.port, opts.auth_mechanism, opts.thirdUser.username,
-                            opts.thirdUser.password, function(err) {
-        if (err) {
-          return done(err);
-        }
-        done();
-      });
+        opts.thirdUser.password, function(err) {
+          if (err) {
+            return done(err);
+          }
+          done();
+        });
     });
   });
 
@@ -161,32 +161,32 @@ describe.skip('Test Extra Users With Different Permissions', function() {
 
     it('should connect and insert with user2 credentials', function(done) {
       verifyUserPassSuccess(opts.port, opts.auth_mechanism, opts.secondUser.username,
-                            opts.secondUser.password, function(err) {
-        if (err) {
-          return done(err);
-        }
-        done();
-      });
+        opts.secondUser.password, function(err) {
+          if (err) {
+            return done(err);
+          }
+          done();
+        });
     });
 
     it('should fail writing with user3 credentials', function(done) {
       verifyWrongDBUserPassFailure(opts.port, opts.auth_mechanism, opts.thirdUser.username,
-                                   opts.thirdUser.password, function(err) {
-        if (err) {
-          return done(err);
-        }
-        done();
-      });
+        opts.thirdUser.password, function(err) {
+          if (err) {
+            return done(err);
+          }
+          done();
+        });
     });
 
     it('should connect and insert with user3 credentials', function(done) {
       verifyUserPassSuccess(opts.port, opts.auth_mechanism, opts.thirdUser.username,
-                            opts.thirdUser.password, function(err) {
-        if (err) {
-          return done(err);
-        }
-        done();
-      });
+        opts.thirdUser.password, function(err) {
+          if (err) {
+            return done(err);
+          }
+          done();
+        });
     });
   });
 
@@ -229,32 +229,32 @@ describe.skip('Test Extra Users With Different Permissions', function() {
 
     it('should connect and insert with user2 credentials', function(done) {
       verifyUserPassSuccess(opts.port, opts.auth_mechanism, opts.secondUser.username,
-                            opts.secondUser.password, function(err) {
-        if (err) {
-          return done(err);
-        }
-        done();
-      });
+        opts.secondUser.password, function(err) {
+          if (err) {
+            return done(err);
+          }
+          done();
+        });
     });
 
     it('should fail writing with user3 credentials', function(done) {
       verifyWrongDBUserPassFailure(opts.port, opts.auth_mechanism, opts.thirdUser.username,
-                                   opts.thirdUser.password, function(err) {
-        if (err) {
-          return done(err);
-        }
-        done();
-      });
+        opts.thirdUser.password, function(err) {
+          if (err) {
+            return done(err);
+          }
+          done();
+        });
     });
 
     it('should connect and insert with user3 credentials', function(done) {
       verifyUserPassSuccess(opts.port, opts.auth_mechanism, opts.thirdUser.username,
-                            opts.thirdUser.password, function(err) {
-        if (err) {
-          return done(err);
-        }
-        done();
-      });
+        opts.thirdUser.password, function(err) {
+          if (err) {
+            return done(err);
+          }
+          done();
+        });
     });
   });
 });
