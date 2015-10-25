@@ -1,6 +1,3 @@
 {
-  "env": {
-    "mocha": true
-  },
   "extends": ["mongodb-js/node"]
 }
