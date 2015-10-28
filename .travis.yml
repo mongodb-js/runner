@@ -17,4 +17,5 @@ notifications:
 after_script: "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
 env:
   - DEBUG=mon* MONGODB_VERSION=2.6.x
-  - DEBUG=mon* MONGODB_VERSION=3.0.x
+  - DEBUG=mon* MONGODB_VERSION=stable
+  - DEBUG=mon* MONGODB_VERSION=unstable
