@@ -42,7 +42,7 @@
     "mongodb": "^2.0.47",
     "mongodb-dbpath": "^0.0.1",
     "mongodb-tools": "mongodb-js/mongodb-tools",
-    "mongodb-version-manager": "^0.8.8",
+    "mongodb-version-manager": "^1.0.0",
     "untildify": "~2.1.0"
   },
   "devDependencies": {
