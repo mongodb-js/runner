@@ -2,7 +2,36 @@
 
 > Easily install and run MongoDB to test your code against it.
 
-## Example
+## Examples
+
+### Mocha
+
+Mocha before/after hooks make writing tests for code that depends on MongoDB insanely simple:
+
+```javascript
+describe('my app', function(){
+  before(require('mongodb-runner/mocha/before'));
+  after(require('mongodb-runner/mocha/after'));
+  it('should connect', function(done){
+    require('mongodb').connect('mongodb://localhost:27017/', done);
+  });
+});
+```
+
+Global hooks are also supported.  Add the following to a new file called `test/mongodb.js`:
+
+```javascript
+before(require('mongodb-runner/mocha/before'));
+after(require('mongodb-runner/mocha/after'));
+```
+
+And then just require it:
+
+```
+mocha --require test/mongodb.js test/*.test.js
+```
+
+### TravisCI
 
 Modify your `package.json` to start and stop MongoDB before and after your tests
 automatically when you run `npm test`:
@@ -97,6 +126,7 @@ Environment Variables:
 
 Apache 2.0
 
+[travis_img]: https://img.shields.io/travis/mongodb-js/runner.svg?style=flat-square
 [travis_url]: https://travis-ci.org/mongodb-js/runner
 [npm_img]: https://img.shields.io/npm/v/mongodb-runner.svg
 [npm_url]: https://www.npmjs.org/package/mongodb-runner
