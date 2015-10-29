@@ -1,4 +1,4 @@
-# mongodb-runner [![][npm_img]][npm_url] [![][travis_img]][travis_url] [![][appveyor_img]][appveyor_url] [![][gitter_img]][gitter_url]
+# mongodb-runner [![][npm_img]][npm_url] [![][travis_img]][travis_url]
 
 > Easily install and run MongoDB to test your code against it.
 
@@ -27,18 +27,17 @@ cache:
 env:
   - MONGODB_VERSION=2.6.x MONGODB_TOPOLOGY=standalone
   - MONGODB_VERSION=3.0.x MONGODB_TOPOLOGY=standalone
-  - MONGODB_VERSION=3.1.x MONGODB_TOPOLOGY=standalone
+  - MONGODB_VERSION=unstable MONGODB_TOPOLOGY=standalone
   - MONGODB_VERSION=2.6.x MONGODB_TOPOLOGY=replicaset
   - MONGODB_VERSION=3.0.x MONGODB_TOPOLOGY=replicaset
-  - MONGODB_VERSION=3.1.x MONGODB_TOPOLOGY=replicaset
+  - MONGODB_VERSION=unstable MONGODB_TOPOLOGY=replicaset
   - MONGODB_VERSION=2.6.x MONGODB_TOPOLOGY=cluster
   - MONGODB_VERSION=3.0.x MONGODB_TOPOLOGY=cluster
-  - MONGODB_VERSION=3.1.x MONGODB_TOPOLOGY=cluster
+  - MONGODB_VERSION=unstable MONGODB_TOPOLOGY=cluster
 ```
 
 And :tada: Now you're fully covered for all of those all of those edge cases the full
 version + topology matrix can present!
-
 
 ## Usage
 
@@ -76,17 +75,28 @@ Options depending on `--topology`:
     --port=<port>                 Port number to start incrementing from when starting shard members [Default `31000`].
     --configPort=<port>           Port number to start incrementing from when starting shard members [Default `35000`].
 
+Environment Variables:
+  MONGODB_VERSION      What version of MongoDB should be installed and available [Default: `stable`]
+  MONGODB_TOPOLOGY     See `--topology`
+  MONGODB_PORT         See `--port`
+  MONGODB_TOPOLOGY     See `topology`
+  MONGODB_ARBITERS     See `arbiters`
+  MONGODB_SECONDARIES  See `secondaries`
+  MONGODB_PASSIVES     See `passives`
+  MONGODB_SHARDS       See `--shards`
+  MONGODB_ROUTERS      See `--routers`
+  MONGODB_CONFIGS      See `--configs`
+  MONGODB_SHARDS_PORT  See `--shardPort`
+  MONGODB_CONFIGS_PORT See `--configPort`
+  MONGODB_ARBITERS     See `--arbiters`
+  MONGODB_SECONDARIES  See `--secondaries`
+  MONGODB_PASSIVES     See `--passives`
 ```
 
 ## License
 
 Apache 2.0
 
-[travis_img]: https://secure.travis-ci.org/mongodb-js/runner.svg?branch=master
 [travis_url]: https://travis-ci.org/mongodb-js/runner
 [npm_img]: https://img.shields.io/npm/v/mongodb-runner.svg
 [npm_url]: https://www.npmjs.org/package/mongodb-runner
-[appveyor_img]: https://ci.appveyor.com/api/projects/status/voa841j5ke8jtpfh?svg=true
-[appveyor_url]: https://ci.appveyor.com/project/imlucas/mongodb-runner
-[gitter_img]: https://badges.gitter.im/Join%20Chat.svg
-[gitter_url]: https://gitter.im/mongodb-js/mongodb-js
