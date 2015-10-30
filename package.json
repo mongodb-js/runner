@@ -62,7 +62,7 @@
     "lone": "~0.4.2",
     "mocha": "~2.3.3",
     "mongodb-js-fmt": "0.0.3",
-    "mongodb-js-precommit": "^0.2.2",
+    "mongodb-js-precommit": "^0.2.3",
     "pre-commit": "^1.1.2",
     "tmp": "0.0.28"
   }
