@@ -53,8 +53,8 @@
     "untildify": "~2.1.0"
   },
   "devDependencies": {
-    "eslint-config-mongodb-js": "^1.0.5",
     "coveralls": "^2.11.6",
+    "eslint-config-mongodb-js": "^1.0.6",
     "github-release": "~0.2.0",
     "gulp": "~3.9.0",
     "istanbul": "^0.4.0",
