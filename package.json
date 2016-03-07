@@ -43,7 +43,7 @@
     "clui": "^0.3.1",
     "debug": "^2.2.0",
     "is-mongodb-running": "0.0.1",
-    "lodash.defaults": "^3.1.2",
+    "lodash.defaults": "^4.0.0",
     "minimist": "^1.2.0",
     "mkdirp": "^0.5.1",
     "mongodb": "^2.1.1",
