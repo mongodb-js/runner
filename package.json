@@ -43,6 +43,7 @@
     "async": "^1.5.2",
     "clui": "^0.3.1",
     "debug": "^2.2.0",
+    "fs-extra": "^0.26.7",
     "is-mongodb-running": "0.0.1",
     "lodash.defaults": "^4.0.1",
     "minimist": "^1.2.0",
