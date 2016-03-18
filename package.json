@@ -56,7 +56,6 @@
     "which": "^1.2.4"
   },
   "devDependencies": {
-    "coveralls": "^2.11.6",
     "eslint-config-mongodb-js": "^2.0.0",
     "github-release": "~0.2.0",
     "gulp": "~3.9.0",
