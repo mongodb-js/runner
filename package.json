@@ -40,6 +40,7 @@
   ],
   "license": "Apache-2.0",
   "dependencies": {
+    "async": "^1.5.2",
     "clui": "^0.3.1",
     "debug": "^2.2.0",
     "is-mongodb-running": "0.0.1",
@@ -50,7 +51,8 @@
     "mongodb-dbpath": "^0.0.1",
     "mongodb-tools": "mongodb-js/mongodb-tools",
     "mongodb-version-manager": "^1.0.2",
-    "untildify": "~2.1.0"
+    "untildify": "~2.1.0",
+    "which": "^1.2.4"
   },
   "devDependencies": {
     "coveralls": "^2.11.6",

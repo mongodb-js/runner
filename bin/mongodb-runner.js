@@ -16,7 +16,6 @@ if (args.debug) {
 var run = require('../');
 var pkg = require('../package.json');
 var clui = require('clui');
-var mvm = require('mongodb-version-manager');
 var debug = require('debug')('mongodb-runner:bin');
 
 args.action = args.action || args._[0] || 'start';
@@ -36,24 +35,12 @@ if (args.action === 'start' && !process.env.CI) {
   new clui.Spinner('Starting a MongoDB deployment to test against...').start();
 }
 
-function exec() {
-  run(args, function(err) {
-    if (err) {
-      console.error(err);
-      process.exit(1);
-      return;
-    }
-    debug('ran action `%s` successfully', args.action);
-    process.exit(0);
-  });
-}
-
-if (args.action !== 'start') {
-  return exec();
-}
-
-mvm.use({
-  version: process.env.MONGODB_VERSION || 'stable'
-}, function() {
-  exec();
+run(args, function(err) {
+  if (err) {
+    console.error(err);
+    process.exit(1);
+    return;
+  }
+  debug('ran action `%s` successfully', args.action);
+  process.exit(0);
 });
