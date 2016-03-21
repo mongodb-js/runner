@@ -20,7 +20,7 @@ var debug = require('debug')('mongodb-runner:mocha:after');
 function mongodb_runner_mocha_after(opts) {
   if (typeof opts === 'function') {
     // So you can just do `after(require('mongodb-runner/mocha/after'));`
-    return mongodb_runner_mocha_after({});
+    return mongodb_runner_mocha_after({}).apply(this, arguments);
   }
   opts = opts || {};
   defaults(opts, {
