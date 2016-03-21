@@ -20,7 +20,7 @@ var debug = require('debug')('mongodb-runner:mocha:before');
 function mongodb_runner_mocha_before(opts) {
   if (typeof opts === 'function') {
     // So you can just do `before(require('mongodb-runner/mocha/before'));`
-    return mongodb_runner_mocha_before({});
+    return mongodb_runner_mocha_before({}).apply(this, arguments);
   }
   opts = opts || {};
   defaults(opts, {
