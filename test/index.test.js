@@ -2,10 +2,35 @@
 
 var run = require('../');
 var kill = require('kill-mongodb');
+var mvm = require('mongodb-version-manager');
+var assert = require('assert');
 
 describe('Test Spawning MongoDB Deployments', function() {
   before(function(done) {
     kill(done);
+  });
+
+  describe('Dry Run', function() {
+    var opts = {
+      action: 'dryrun',
+      name: 'mongodb-runner-test-standalone',
+      port: 20000
+    };
+
+    it('should only invoke mongodb-version-manager', function(done) {
+      run(opts, function(err) {
+        if (err) {
+          return done(err);
+        }
+        mvm.current(function(err2, v) {
+          if (err2) {
+            return done(err2);
+          }
+          assert(v);  // ensure not null
+          done();
+        });
+      });
+    });
   });
 
   describe('Standalone', function() {

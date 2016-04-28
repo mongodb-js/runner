@@ -1,4 +1,5 @@
-Usage: mongodb-runner <start|stop> [options]
+
+Usage: mongodb-runner <start|stop|dryrun> [options]
 
 Start/stop mongodb for testing.
 
