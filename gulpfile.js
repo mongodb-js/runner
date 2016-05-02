@@ -46,19 +46,19 @@ gulp.task('pem', function(done) {
   exec('openssl req -new -x509 -days 365 -nodes'
     + ' -out ' + out + ' -keyout ' + keyout
     + ' -subj "/C=US/ST=NY/L=NYC/CN=www.mongodb.com"', function(err) {
+    if (err) {
+      return done(err);
+    }
+
+    exec('cat ' + out + ' ' + keyout + ' > ' + pem, function(err) {
       if (err) {
         return done(err);
       }
+      console.log('- ' + out);
+      console.log('- ' + keyout);
+      console.log('- ' + pem);
 
-      exec('cat ' + out + ' ' + keyout + ' > ' + pem, function(err) {
-        if (err) {
-          return done(err);
-        }
-        console.log('- ' + out);
-        console.log('- ' + keyout);
-        console.log('- ' + pem);
-
-        done();
-      });
+      done();
     });
+  });
 });
