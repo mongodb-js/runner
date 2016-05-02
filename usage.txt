@@ -1,7 +1,7 @@
 
-Usage: mongodb-runner <start|stop|dryrun> [options]
+Usage: mongodb-runner <start|stop|install> [options]
 
-Start/stop mongodb for testing.
+Start/stop/install MongoDB for testing.
 
 Options:
   --topology=<topology>         One of standalone, replicaset, or cluster [Default: `standalone`].
