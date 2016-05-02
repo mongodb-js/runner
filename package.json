@@ -58,7 +58,7 @@
   "devDependencies": {
     "eslint-config-mongodb-js": "^2.0.0",
     "github-release": "~0.2.0",
-    "gulp": "~3.9.0",
+    "gulp": "~3.9.1",
     "kill-mongodb": "^0.0.1",
     "lone": "~0.4.2",
     "mocha": "^2.3.4",
