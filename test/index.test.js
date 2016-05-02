@@ -10,9 +10,9 @@ describe('Test Spawning MongoDB Deployments', function() {
     kill(done);
   });
 
-  describe('Dry Run', function() {
+  describe('Install', function() {
     var opts = {
-      action: 'dryrun',
+      action: 'install',
       name: 'mongodb-runner-test-standalone',
       port: 20000
     };
