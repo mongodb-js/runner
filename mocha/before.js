@@ -30,8 +30,12 @@ function mongodb_runner_mocha_before(opts) {
   });
 
   return function(done) {
-    this.timeout(opts.timeout);
-    this.slow(opts.slow);
+    if (typeof this.timeout === 'function') {
+      this.timeout(opts.timeout);
+    }
+    if (typeof this.slow === 'function') {
+      this.slow(opts.slow);
+    }
 
     debug('checking if mongodb is running...');
     running(function(err, res) {
