@@ -1,12 +1,11 @@
 sudo: false
 language: node_js
 node_js:
-  - 5
+  - 6
 script: npm run-script ci
 cache:
   directories:
     - node_modules
 env:
-  - DEBUG=mon* MONGODB_VERSION=2.6.x
   - DEBUG=mon* MONGODB_VERSION=stable
   - DEBUG=mon* MONGODB_VERSION=unstable
