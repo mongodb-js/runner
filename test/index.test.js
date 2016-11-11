@@ -1,5 +1,7 @@
 /* eslint no-sync:0 */
-
+if (process.platform === 'win32') {
+  require('debug').enable('*');
+}
 var run = require('../');
 var kill = require('kill-mongodb');
 var mvm = require('mongodb-version-manager');
