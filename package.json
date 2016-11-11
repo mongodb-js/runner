@@ -59,7 +59,7 @@
     "eslint-config-mongodb-js": "^2.2.0",
     "github-release": "~0.2.0",
     "gulp": "~3.9.0",
-    "kill-mongodb": "^0.0.1",
+    "kill-mongodb": "^1.0.0",
     "lone": "~0.4.2",
     "mocha": "^3.0.2",
     "mongodb-js-fmt": "0.0.3",
