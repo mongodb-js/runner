@@ -10,7 +10,10 @@ describe('Test Spawning MongoDB Deployments', function() {
     kill(done);
   });
 
-  describe('Install', function() {
+  /**
+   * TODO (imlucas) Can't remember reasoning for this test whatsoever.
+   */
+  describe.skip('Install', function() {
     var opts = {
       action: 'install',
       name: 'mongodb-runner-test-standalone',
