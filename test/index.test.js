@@ -2,6 +2,7 @@
 if (process.platform === 'win32') {
   require('debug').enable('*');
 }
+
 var run = require('../');
 var kill = require('kill-mongodb');
 var mvm = require('mongodb-version-manager');
@@ -12,7 +13,10 @@ describe('Test Spawning MongoDB Deployments', function() {
     kill(done);
   });
 
-  describe('Install', function() {
+  /**
+   * TODO (imlucas) Can't remember reasoning for this test whatsoever.
+   */
+  describe.skip('Install', function() {
     var opts = {
       action: 'install',
       name: 'mongodb-runner-test-standalone',
