@@ -1,4 +1,5 @@
-# mongodb-runner [![][npm_img]][npm_url] [![][travis_img]][travis_url]
+# mongodb-runner [![][npm_img]][npm_url] [![][travis_img]][travis_url] [![][appveyor_img]][appveyor_url]
+
 
 > Easily install and run MongoDB to test your code against it.
 
@@ -130,3 +131,5 @@ Apache 2.0
 [travis_url]: https://travis-ci.org/mongodb-js/runner
 [npm_img]: https://img.shields.io/npm/v/mongodb-runner.svg
 [npm_url]: https://www.npmjs.org/package/mongodb-runner
+[appveyor_img]: https://ci.appveyor.com/api/projects/status/w3guhkp628hwwpjg?svg=true
+[appveyor_url]: https://ci.appveyor.com/project/imlucas/runner
