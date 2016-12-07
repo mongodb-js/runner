@@ -48,7 +48,7 @@
     "lodash.defaults": "^4.0.1",
     "minimist": "^1.2.0",
     "mkdirp": "^0.5.1",
-    "mongodb": "^2.2.8",
+    "mongodb": "^2.2.13",
     "mongodb-dbpath": "^0.0.1",
     "mongodb-tools": "mongodb-js/mongodb-tools",
     "mongodb-version-manager": "^1.0.4",
