@@ -60,7 +60,7 @@
     "github-release": "~0.2.0",
     "gulp": "~3.9.0",
     "kill-mongodb": "^0.0.1",
-    "lone": "~0.4.2",
+    "lone": "~0.5.0",
     "mocha": "^3.0.2",
     "mongodb-js-fmt": "0.0.3",
     "mongodb-js-precommit": "^0.2.9",
