@@ -53,7 +53,7 @@
     "mongodb-tools": "mongodb-js/mongodb-tools",
     "mongodb-version-manager": "^1.0.4",
     "untildify": "~3.0.0",
-    "which": "^1.2.4"
+    "which": "^1.2.14"
   },
   "devDependencies": {
     "eslint-config-mongodb-js": "^2.2.0",
