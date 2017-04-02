@@ -40,7 +40,7 @@
   ],
   "license": "Apache-2.0",
   "dependencies": {
-    "async": "^2.0.0",
+    "async": "^2.3.0",
     "clui": "^0.3.1",
     "debug": "^2.2.0",
     "fs-extra": "^1.0.0",
