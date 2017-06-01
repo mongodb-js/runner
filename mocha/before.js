@@ -25,8 +25,9 @@ function mongodb_runner_mocha_before(opts) {
   opts = opts || {};
   defaults(opts, {
     port: 27017,
-    timeout: 10000,
-    slow: 10000
+    // Higher timeouts as downloading mongod on travis can take a while
+    timeout: 20000,
+    slow: 20000
   });
 
   return function(done) {
