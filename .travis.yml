@@ -9,5 +9,3 @@ cache:
 env:
   - DEBUG=mon* MONGODB_VERSION=stable
   - DEBUG=mon* MONGODB_VERSION=unstable
-before_install:
-  - rm -rf /home/travis/build/mongodb-js/runner/node_modules/mongodb-version-manager/.mongodb/downloads/mongodb-linux-x86_64-3.4.9.tgz
