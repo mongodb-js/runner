@@ -5,31 +5,56 @@
 
 ## Examples
 
-### Mocha
+### Testing
 
 Mocha before/after hooks make writing tests for code that depends on MongoDB insanely simple:
 
+#### Mocha
+
 ```javascript
 describe('my app', function(){
-  before(require('mongodb-runner/mocha/before'));
-  after(require('mongodb-runner/mocha/after'));
+  before(require('mongodb-runner/testing/before'));
+  after(require('mongodb-runner/testing/after'));
   it('should connect', function(done){
     require('mongodb').connect('mongodb://localhost:27017/', done);
   });
 });
 ```
 
+#### Jasmine
+
+```javascript
+describe('my app', function(){
+  beforeEach(require('mongodb-runner/testing/before'));
+  afterEach(require('mongodb-runner/testing/after'));
+  it('should connect', function(done){
+    require('mongodb').connect('mongodb://localhost:27017/', done);
+  });
+});
+```
+
+#### Mocha
+
 Global hooks are also supported.  Add the following to a new file called `test/mongodb.js`:
 
 ```javascript
-before(require('mongodb-runner/mocha/before'));
-after(require('mongodb-runner/mocha/after'));
+before(require('mongodb-runner/testing/before'));
+after(require('mongodb-runner/testing/after'));
 ```
 
 And then just require it:
 
 ```
 mocha --require test/mongodb.js test/*.test.js
+```
+
+#### Jasmine
+
+You can use the global hooks in a jasmine test suite
+
+```javascript
+beforeAll(require('mongodb-runner/testing/before'));
+afterAll(require('mongodb-runner/testing/after'));
 ```
 
 ### TravisCI
