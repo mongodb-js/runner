@@ -18,14 +18,26 @@
     "url": "git://github.com/mongodb-js/runner.git"
   },
   "check": {
-    "entries": ["bin/*.js"],
-    "ignore": ["coverage/{*,**/*}"]
+    "entries": [
+      "bin/*.js"
+    ],
+    "ignore": [
+      "coverage/{*,**/*}"
+    ]
   },
   "dependency-check": {
-    "entries": ["mocha/after.js", "mocha/before.js"]
+    "entries": [
+      "mocha/after.js",
+      "mocha/before.js"
+    ]
   },
-  "precommit": ["check"],
-  "keywords": ["mongodb", "mongodb.js"],
+  "precommit": [
+    "check"
+  ],
+  "keywords": [
+    "mongodb",
+    "mongodb.js"
+  ],
   "license": "Apache-2.0",
   "dependencies": {
     "async": "^2.0.0",
@@ -39,7 +51,7 @@
     "mongodb": "^2.2.8",
     "mongodb-dbpath": "^0.0.1",
     "mongodb-tools": "mongodb-js/mongodb-tools",
-    "mongodb-version-manager": "^1.0.8",
+    "mongodb-version-manager": "^1.1.0",
     "untildify": "^3.0.0",
     "which": "^1.2.4"
   },
