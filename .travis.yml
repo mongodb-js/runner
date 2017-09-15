@@ -3,9 +3,9 @@ language: node_js
 node_js:
   - 8
 script: npm run-script ci
-cache:
-  directories:
-    - node_modules
+# cache:
+#   directories:
+#     - node_modules
 env:
   - DEBUG=mon* MONGODB_VERSION=stable
   - DEBUG=mon* MONGODB_VERSION=unstable
