@@ -18,32 +18,20 @@
     "url": "git://github.com/mongodb-js/runner.git"
   },
   "check": {
-    "entries": [
-      "bin/*.js"
-    ],
-    "ignore": [
-      "coverage/{*,**/*}"
-    ]
+    "entries": ["bin/*.js"],
+    "ignore": ["coverage/{*,**/*}"]
   },
   "dependency-check": {
-    "entries": [
-      "mocha/after.js",
-      "mocha/before.js"
-    ]
+    "entries": ["mocha/after.js", "mocha/before.js"]
   },
-  "precommit": [
-    "check"
-  ],
-  "keywords": [
-    "mongodb",
-    "mongodb.js"
-  ],
+  "precommit": ["check"],
+  "keywords": ["mongodb", "mongodb.js"],
   "license": "Apache-2.0",
   "dependencies": {
     "async": "^2.0.0",
     "clui": "^0.3.1",
-    "debug": "^2.2.0",
-    "fs-extra": "^1.0.0",
+    "debug": "^3.0.1",
+    "fs-extra": "^4.0.2",
     "is-mongodb-running": "0.0.1",
     "lodash.defaults": "^4.0.1",
     "minimist": "^1.2.0",
@@ -51,23 +39,20 @@
     "mongodb": "^2.2.8",
     "mongodb-dbpath": "^0.0.1",
     "mongodb-tools": "mongodb-js/mongodb-tools",
-    "mongodb-version-manager": "^1.0.4",
-    "untildify": "~3.0.0",
+    "mongodb-version-manager": "^1.0.8",
+    "untildify": "^3.0.0",
     "which": "^1.2.4"
   },
   "devDependencies": {
     "eslint-config-mongodb-js": "^2.2.0",
-    "github-release": "~0.2.0",
-    "gulp": "~3.9.0",
-    "kill-mongodb": "^0.0.1",
-    "lone": "~0.4.2",
+    "github-release": "^0.2.0",
+    "gulp": "^3.9.0",
+    "kill-mongodb": "^1.0.1",
+    "lone": "^0.5.0",
     "mocha": "^3.0.2",
-    "mongodb-js-fmt": "0.0.3",
-    "mongodb-js-precommit": "^0.2.9",
+    "mongodb-js-fmt": "^0.0.3",
+    "mongodb-js-precommit": "^0.3.0",
     "pre-commit": "^1.1.2",
-    "tmp": "0.0.30"
-  },
-  "engines": {
-    "node": ">=4.0.0"
+    "tmp": "0.0.33"
   }
 }
