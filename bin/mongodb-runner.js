@@ -10,7 +10,7 @@ var args = require('minimist')(process.argv.slice(2), {
 });
 
 if (args.debug) {
-  process.env.DEBUG = 'mongodb-runner';
+  process.env.DEBUG = 'mongodb-runner*';
 }
 
 var run = require('../');
