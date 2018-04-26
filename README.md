@@ -1,6 +1,5 @@
 # mongodb-runner [![][npm_img]][npm_url] [![][travis_img]][travis_url] [![][appveyor_img]][appveyor_url]
 
-
 > Easily install and run MongoDB to test your code against it.
 
 ## Examples
@@ -10,16 +9,16 @@
 Mocha before/after hooks make writing tests for code that depends on MongoDB insanely simple:
 
 ```javascript
-describe('my app', function(){
+describe('my app', function() {
   before(require('mongodb-runner/mocha/before'));
   after(require('mongodb-runner/mocha/after'));
-  it('should connect', function(done){
+  it('should connect', function(done) {
     require('mongodb').connect('mongodb://localhost:27017/', done);
   });
 });
 ```
 
-Global hooks are also supported.  Add the following to a new file called `test/mongodb.js`:
+Global hooks are also supported. Add the following to a new file called `test/mongodb.js`:
 
 ```javascript
 before(require('mongodb-runner/mocha/before'));
@@ -122,6 +121,50 @@ Environment Variables:
   MONGODB_SECONDARIES  See `--secondaries`
   MONGODB_PASSIVES     See `--passives`
 ```
+
+As `mongodb-runner` uses [`mongodb-version-manager`](https://github.com/mongodb-js/version-manager) to actually handle resolving versions and downloading MongoDB, it follows the same storage conventions.
+
+When installed globally, `npm install -g mongodb-runner`, each version of MongoDB you've installed are stored under `~/.mongodb/versions`:
+
+```
+├── mongodb-3.0.7-osx-64
+├── mongodb-3.2.0-osx-64
+├── mongodb-3.3.8-osx-64-enterprise
+├── mongodb-3.4.0-rc2-osx-64
+├── mongodb-3.4.4-osx-64
+├── mongodb-3.4.5-osx-64-enterprise
+├── mongodb-3.5.1-osx-64
+├── mongodb-3.6.3-osx-64
+├── mongodb-3.6.4-osx-64
+├── mongodb-3.7.3-osx-64
+└── mongodb-current -> ~/.mongodb/versions/mongodb-3.6.4-osx-64
+```
+
+The contents of each directory under `~/.mongodb/versions/mongodb-*` are:
+
+```
+├── GNU-AGPL-3.0
+├── MPL-2
+├── README
+├── THIRD-PARTY-NOTICES
+└── bin
+    ├── bsondump
+    ├── install_compass
+    ├── mongo
+    ├── mongod
+    ├── mongodump
+    ├── mongoexport
+    ├── mongofiles
+    ├── mongoimport
+    ├── mongoperf
+    ├── mongoreplay
+    ├── mongorestore
+    ├── mongos
+    ├── mongostat
+    └── mongotop
+```
+
+When installed locally, `npm install mongodb-runner --save-dev`, each version of MongoDB you've installed are stored under `/node_modules/mongodb-version-manager/.mongodb/versions` with the same directory layout as above. This helps to speed up CI builds by caching downloads in a directory you're most likely to already have setup for CI. For more information, see the [`mongodb-version-manager`](https://github.com/mongodb-js/version-manager) README.md.
 
 ## License
 
