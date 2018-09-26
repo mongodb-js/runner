@@ -2,10 +2,16 @@ sudo: false
 language: node_js
 node_js:
   - 8
-script: npm run-script ci
+before_install:
+  - npm i -g npm
+install:
+  - npm ci
+script:
+  - npm run check
+  - npm test
 cache:
   directories:
-    - node_modules
+    - '$HOME/.npm'
 env:
   - DEBUG=mon* MONGODB_VERSION=stable
   - DEBUG=mon* MONGODB_VERSION=unstable

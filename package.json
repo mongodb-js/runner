@@ -1,13 +1,11 @@
 {
   "name": "mongodb-runner",
   "version": "4.1.0",
-  "author": "Lucas Hrabovsky <hrabovsky.lucas@gmail.com> (http://imlucas.com)",
-  "description": "Starts all of the deployment types for testing",
+  "author": "Lucas Hrabovsky <hrabovsky.lucas@gmail.com> (https://imlucas.com)",
+  "description": "The easiest way to test your code against MongoDB Server.",
   "scripts": {
-    "fmt": "mongodb-js-fmt mocha/*.js ./*.js bin/*.js lib/*.js test/*.js",
     "check": "mongodb-js-precommit",
-    "test": "mocha",
-    "ci": "npm run check && npm test"
+    "test": "mocha"
   },
   "bin": {
     "mongodb-runner": "./bin/mongodb-runner.js"
@@ -31,9 +29,6 @@
       "mocha/before.js"
     ]
   },
-  "precommit": [
-    "check"
-  ],
   "keywords": [
     "mongodb",
     "mongodb.js"
@@ -44,13 +39,13 @@
     "clui": "^0.3.1",
     "debug": "^3.0.1",
     "fs-extra": "^4.0.2",
-    "is-mongodb-running": "0.0.1",
+    "is-mongodb-running": "^0.2.0",
     "lodash.defaults": "^4.0.1",
     "minimist": "^1.2.0",
     "mkdirp": "^0.5.1",
     "mongodb": "^3.1.4",
     "mongodb-dbpath": "^0.0.1",
-    "mongodb-tools": "mongodb-js/mongodb-tools",
+    "mongodb-tools": "mongodb-js/mongodb-tools#fd48f4f53084f1eadf7c721de16c49b45585670c",
     "mongodb-version-manager": "^1.1.3",
     "untildify": "^3.0.0",
     "which": "^1.2.4"
@@ -62,9 +57,7 @@
     "kill-mongodb": "^1.0.1",
     "lone": "^0.5.0",
     "mocha": "^3.0.2",
-    "mongodb-js-fmt": "^0.0.3",
     "mongodb-js-precommit": "^0.3.0",
-    "pre-commit": "^1.1.2",
     "tmp": "0.0.33"
   }
 }
