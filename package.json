@@ -1,13 +1,11 @@
 {
   "name": "mongodb-runner",
   "version": "4.1.0",
-  "author": "Lucas Hrabovsky <hrabovsky.lucas@gmail.com> (http://imlucas.com)",
-  "description": "Starts all of the deployment types for testing",
+  "author": "Lucas Hrabovsky <hrabovsky.lucas@gmail.com> (https://imlucas.com)",
+  "description": "The easiest way to test your code against MongoDB Server.",
   "scripts": {
-    "fmt": "mongodb-js-fmt mocha/*.js ./*.js bin/*.js lib/*.js test/*.js",
     "check": "mongodb-js-precommit",
-    "test": "mocha",
-    "ci": "npm run check && npm test"
+    "test": "mocha"
   },
   "bin": {
     "mongodb-runner": "./bin/mongodb-runner.js"
