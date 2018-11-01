@@ -9,4 +9,5 @@ run.worker(args, function(err) {
     process.exit(1);
     return;
   }
+  process.exit(0);
 });
