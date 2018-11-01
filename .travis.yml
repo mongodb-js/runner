@@ -2,7 +2,6 @@ sudo: false
 language: node_js
 node_js:
   - 10.2.1
-  - 8
 before_install:
   - npm i -g npm
 script:
