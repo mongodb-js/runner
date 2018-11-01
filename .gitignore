@@ -6,3 +6,5 @@ npm-debug.log
 .lone/
 coverage/
 .mongodb/
+
+package-lock.json
