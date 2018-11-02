@@ -46,7 +46,7 @@
     "mongodb": "^3.1.4",
     "mongodb-dbpath": "^0.0.1",
     "mongodb-tools": "mongodb-js/mongodb-tools#194bdd6ac7922f8dcf3853de1aece0b0fdda93cf",
-    "mongodb-version-manager": "^1.2.1",
+    "mongodb-version-manager": "mongodb-js/mongodb-version-manager#495ee0740142ecda003b9a79ac773ac2b91e26ec",
     "untildify": "^3.0.0",
     "which": "^1.2.4"
   },
