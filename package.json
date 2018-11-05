@@ -1,6 +1,6 @@
 {
   "name": "mongodb-runner",
-  "version": "4.3.3",
+  "version": "4.4.0",
   "author": "Lucas Hrabovsky <hrabovsky.lucas@gmail.com> (https://imlucas.com)",
   "description": "The easiest way to test your code against MongoDB Server.",
   "scripts": {
@@ -37,27 +37,26 @@
   "dependencies": {
     "async": "^2.0.0",
     "clui": "^0.3.1",
-    "debug": "^3.0.1",
+    "debug": ">= 2.6.9 < 3.0.0 || >= 3.1.0",
     "fs-extra": "^4.0.2",
-    "is-mongodb-running": "^0.2.0",
+    "is-mongodb-running": "^1.0.1",
     "lodash.defaults": "^4.0.1",
     "minimist": "^1.2.0",
     "mkdirp": "^0.5.1",
     "mongodb": "^3.1.4",
     "mongodb-dbpath": "^0.0.1",
     "mongodb-tools": "mongodb-js/mongodb-tools#194bdd6ac7922f8dcf3853de1aece0b0fdda93cf",
-    "mongodb-version-manager": "mongodb-js/mongodb-version-manager#495ee0740142ecda003b9a79ac773ac2b91e26ec",
+    "mongodb-version-manager": "^1.2.0",
     "untildify": "^3.0.0",
     "which": "^1.2.4"
   },
   "devDependencies": {
-    "eslint-config-mongodb-js": "^2.2.0",
+    "eslint-config-mongodb-js": "^3.0.0",
     "github-release": "^0.2.0",
-    "gulp": "^3.9.0",
     "kill-mongodb": "^1.0.1",
     "lone": "^0.5.0",
     "mocha": "^5.2.0",
-    "mongodb-js-precommit": "^0.3.0",
+    "mongodb-js-precommit": "^1.0.0",
     "tmp": "0.0.33"
   }
 }
