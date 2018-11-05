@@ -58,5 +58,8 @@
     "mocha": "^5.2.0",
     "mongodb-js-precommit": "^1.0.0",
     "tmp": "0.0.33"
+  },
+  "peerDependencies": {
+    "require_optional": "^1.0.1"
   }
 }
