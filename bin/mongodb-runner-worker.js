@@ -26,6 +26,8 @@ startWorker(args, function(err, opts) {
     server = null;
     opts = null;
     debug('goodbye');
+
+    process.exit(0);
   }
 
   /**
