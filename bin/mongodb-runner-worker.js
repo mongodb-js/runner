@@ -4,7 +4,7 @@ var args = require('minimist')(process.argv.slice(2), {});
 var startWorker = require('../lib/worker');
 
 debug('Starting...');
-startWorker(args, function(err) {
+startWorker(args, function(err, opts) {
   /* eslint no-console:0 */
   if (err) {
     console.error(
@@ -20,4 +20,20 @@ startWorker(args, function(err) {
   debug(
     'Remaining alive in the background to await control commands from parent process...'
   );
+
+  function onServerStopped() {
+    debug('`%s` stopped', opts.name);
+    server = null;
+    opts = null;
+    debug('goodbye');
+  }
+
+  /**
+   * When this process receives a SIGTERM, this stops the server processes
+   * by calling `mongodb-tools`'s stop function.
+   */
+  process.on('SIGTERM', function() {
+    debug('stopping `%s`...', opts.name);
+    opts.server.stop({signal: 9}, onServerStopped);
+  });
 });
