@@ -15,7 +15,7 @@ if (args.debug) {
 
 var pkg = require('../package.json');
 var clui = require('clui');
-var debug = require('debug')('mongodb-runner:bin');
+var debug = require('debug')('mongodb-runner:bin:mongodb-runner.js');
 
 args.action = args.action || args._[0] || 'start';
 
@@ -28,10 +28,18 @@ if (args.version) {
   process.exit(1);
 }
 
-debug('running action `%s`', args.action);
+debug('Running action `%s`...', args.action);
 
-if (args.action === 'start' && !process.env.CI) {
-  new clui.Spinner('Starting a MongoDB deployment to test against...').start();
+if (!process.env.CI) {
+  if (args.action === 'start') {
+    new clui.Spinner(
+      'Starting a MongoDB deployment to test against...'
+    ).start();
+  } else if (args.action === 'stop') {
+    new clui.Spinner(
+      'Stopping any local MongoDB deployments...'
+    ).start();
+  }
 }
 
 debug('Importing for run...', args);
