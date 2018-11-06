@@ -13,7 +13,6 @@ if (args.debug) {
   process.env.DEBUG = 'mongodb-runner*';
 }
 
-var run = require('../');
 var pkg = require('../package.json');
 var clui = require('clui');
 var debug = require('debug')('mongodb-runner:bin');
@@ -34,6 +33,9 @@ debug('running action `%s`', args.action);
 if (args.action === 'start' && !process.env.CI) {
   new clui.Spinner('Starting a MongoDB deployment to test against...').start();
 }
+
+debug('Importing for run...', args);
+var run = require('../');
 
 run(args, function(err) {
   if (err) {
