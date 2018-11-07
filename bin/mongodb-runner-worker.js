@@ -11,7 +11,13 @@ startWorker(args, function(err, opts) {
       'mongodb-runner:bin:mongodb-runner-worker.js Unexpected error. Exiting.',
       err
     );
-    process.exit(1);
+    process.send({
+      event: 'error',
+      opts: opts
+    });
+    setTimeout(function() {
+      process.exit(1);
+    }, 500);
     return;
   }
 
@@ -36,6 +42,6 @@ startWorker(args, function(err, opts) {
    */
   process.on('SIGTERM', function() {
     debug('stopping `%s`...', opts.name);
-    opts.server.stop({signal: 9}, onServerStopped);
+    opts.server.stop({ signal: 9 }, onServerStopped);
   });
 });
