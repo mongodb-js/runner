@@ -1,7 +1,10 @@
 {
   "name": "mongodb-runner",
   "version": "4.7.1",
-  "author": "Lucas Hrabovsky <hrabovsky.lucas@gmail.com> (https://imlucas.com)",
+  "author": "Lucas Hrabovsky <lucas@mongodb.com> (https://github.com/imlucas)",
+  "contributors": [
+    "Addison Elliott <addison.elliott@gmail.com> (https://github.com/addisonElliott)"
+  ],
   "description": "The easiest way to test your code against MongoDB Server.",
   "scripts": {
     "check": "mongodb-js-precommit",
