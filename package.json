@@ -49,7 +49,7 @@
     "mkdirp": "^0.5.1",
     "mongodb": "^3.1.9",
     "mongodb-dbpath": "^0.0.1",
-    "mongodb-tools": "mongodb-js/mongodb-tools#b461a4c41cdf92e0c80402b2893b3b11c0ed616c",
+    "mongodb-tools": "github:mongodb-js/mongodb-tools#8da4724189dfdf7b0d02d87db14b7ce94adf6342",
     "mongodb-version-manager": "^1.3.0",
     "untildify": "^3.0.0",
     "which": "^1.2.4"
