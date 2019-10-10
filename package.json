@@ -1,6 +1,9 @@
 {
   "name": "mongodb-runner",
-  "version": "4.7.1",
+  "contributors": [
+    "Addison Elliott <addison.elliott@gmail.com> (https://github.com/addisonElliott)"
+  ],
+  "version": "4.7.2",
   "author": "Lucas Hrabovsky <hrabovsky.lucas@gmail.com> (https://imlucas.com)",
   "description": "The easiest way to test your code against MongoDB Server.",
   "scripts": {
@@ -50,7 +53,7 @@
     "mongodb": "^3.1.9",
     "mongodb-dbpath": "^0.0.1",
     "mongodb-tools": "github:mongodb-js/mongodb-tools#8da4724189dfdf7b0d02d87db14b7ce94adf6342",
-    "mongodb-version-manager": "^1.3.0",
+    "mongodb-version-manager": "^1.3.1",
     "untildify": "^3.0.0",
     "which": "^1.2.4"
   },
