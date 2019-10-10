@@ -29,7 +29,7 @@ describe('Test Spawning MongoDB Deployments', function() {
           if (err2) {
             return done(err2);
           }
-          assert(v);  // ensure not null
+          assert(v); // ensure not null
           done();
         });
       });
