@@ -29,7 +29,6 @@ startWorker(args, function(err, opts) {
 
   function onServerStopped() {
     debug('`%s` stopped', opts.name);
-    server = null;
     opts = null;
     debug('goodbye');
 
