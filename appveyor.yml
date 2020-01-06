@@ -8,14 +8,14 @@ branches:
     - master
 
 # build version format
-version: "{build}"
+version: '{build}'
 
 # what combinations to test
 environment:
   global:
     DEBUG: '*'
   matrix:
-    - nodejs_version: 10.2.1
+    - nodejs_version: 12.4.0
 
 # Get the stable version of node
 install:
@@ -27,13 +27,13 @@ build: 'off'
 test_script:
   # Output useful info for debugging.
   - node --version && npm --version
-  - ps: "npm test # PowerShell" # Pass comment to PS for easier debugging
+  - ps: 'npm test # PowerShell' # Pass comment to PS for easier debugging
   - cmd: npm test
 
 matrix:
   fast_finish: true
 
 cache:
-  - C:\Users\appveyor\AppData\Roaming\npm\node_modules -> package.json  # global npm modules
-  - C:\Users\appveyor\AppData\Roaming\npm-cache -> package.json         # npm cache
-  - node_modules -> package.json                                        # local npm modules
+  - C:\Users\appveyor\AppData\Roaming\npm\node_modules -> package.json # global npm modules
+  - C:\Users\appveyor\AppData\Roaming\npm-cache -> package.json # npm cache
+  - node_modules -> package.json # local npm modules

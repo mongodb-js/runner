@@ -50,18 +50,16 @@
     "lodash.defaults": "^4.2.0",
     "minimist": "^1.2.0",
     "mkdirp": "^0.5.1",
-    "mongodb": "^3.3.2",
+    "mongodb": "^3.4.0",
     "mongodb-dbpath": "^0.0.1",
-    "mongodb-tools": "github:mongodb-js/mongodb-tools#8da4724189dfdf7b0d02d87db14b7ce94adf6342",
+    "mongodb-tools": "github:mongodb-js/mongodb-tools#0d1a90f49796c41f6d47c7c7999fe384014a16a0",
     "mongodb-version-manager": "^1.4.3",
     "untildify": "^4.0.0",
     "which": "^2.0.1"
   },
   "devDependencies": {
     "eslint-config-mongodb-js": "^5.0.3",
-    "github-release": "^0.2.0",
     "kill-mongodb": "^1.0.1",
-    "lone": "^0.5.0",
     "mocha": "^6.2.1",
     "mongodb-js-precommit": "^2.0.0",
     "tmp": "^0.1.0"
