@@ -30,7 +30,7 @@ function mongodb_runner_mocha_after(opts) {
   return function(done) {
     if (process.env.MONGODB_RUNNER_MOCHA_SKIP_STOP) {
       debug('not stopping mongodb as it was not started by mocha/before');
-      process.env.MONGODB_RUNNER_MOCHA_SKIP_STOP = undefined;
+      delete process.env.MONGODB_RUNNER_MOCHA_SKIP_STOP;
       done();
       return;
     }
