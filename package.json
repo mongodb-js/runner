@@ -3,7 +3,7 @@
   "contributors": [
     "Addison Elliott <addison.elliott@gmail.com> (https://github.com/addisonElliott)"
   ],
-  "version": "4.8.2",
+  "version": "4.8.3",
   "author": "Lucas Hrabovsky <hrabovsky.lucas@gmail.com> (https://imlucas.com)",
   "description": "The easiest way to test your code against MongoDB Server.",
   "scripts": {
