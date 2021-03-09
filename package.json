@@ -53,7 +53,7 @@
     "mongodb": "^3.4.0",
     "mongodb-dbpath": "^0.0.1",
     "mongodb-tools": "github:mongodb-js/mongodb-tools#0d1a90f49796c41f6d47c7c7999fe384014a16a0",
-    "mongodb-version-manager": "^1.4.3",
+    "mongodb-version-manager": "^1.4.4",
     "untildify": "^4.0.0",
     "which": "^2.0.1"
   },
